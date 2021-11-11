@@ -1,9 +1,0 @@
-{
-  "package_name": "nandhi_msg_types",
-  "non_idl_tuples": [
-    "/home/ubuntu/project/nandhi/nandhi_msg_types:msg/ImuSensor.msg",
-    "/home/ubuntu/project/nandhi/nandhi_msg_types:msg/Pose.msg",
-    "/home/ubuntu/project/nandhi/nandhi_msg_types:msg/Orientation.msg",
-    "/home/ubuntu/project/nandhi/nandhi_msg_types:msg/EgoState.msg"
-  ]
-}

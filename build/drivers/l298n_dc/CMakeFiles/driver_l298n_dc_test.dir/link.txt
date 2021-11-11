@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/driver_l298n_dc_test.dir/test/test_l298n_dc.cc.o  -o driver_l298n_dc_test  -Wl,-rpath,/usr/local/lib libdriver_l298n_dc.a /usr/local/lib/libwiringPi.so -lpthread -lrt -lcrypt 

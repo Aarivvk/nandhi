@@ -1,2 +1,0 @@
-/usr/bin/ar qc libdriver_l298n_dc.a  CMakeFiles/driver_l298n_dc.dir/src/l298n_dc.cc.o
-/usr/bin/ranlib libdriver_l298n_dc.a
