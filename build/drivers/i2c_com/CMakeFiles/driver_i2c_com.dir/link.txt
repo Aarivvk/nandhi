@@ -1,0 +1,2 @@
+/usr/bin/ar qc libdriver_i2c_com.a  CMakeFiles/driver_i2c_com.dir/src/i2c.cc.o
+/usr/bin/ranlib libdriver_i2c_com.a

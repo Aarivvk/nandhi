@@ -1,0 +1,30 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from nandhi_msg_types/msg/ImuSensor.msg
+// generated code does not contain a copyright notice
+
+
+module nandhi_msg_types {
+  module msg {
+    struct ImuSensor {
+      double raw_acc_x;
+
+      double raw_acc_y;
+
+      double raw_acc_z;
+
+      double raw_gyro_x;
+
+      double raw_gyro_y;
+
+      double raw_gyro_z;
+
+      double raw_mag_x;
+
+      double raw_mag_y;
+
+      double raw_mag_z;
+
+      double temp;
+    };
+  };
+};

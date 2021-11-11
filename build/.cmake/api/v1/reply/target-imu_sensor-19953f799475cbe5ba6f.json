@@ -1,0 +1,182 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "drivers/imu_sensor/libimu_sensor.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"add_dependencies",
+			"rosidl_target_interfaces",
+			"target_link_libraries",
+			"add_compile_options",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"drivers/imu_sensor/CMakeLists.txt",
+			"/opt/ros/galactic/share/rosidl_cmake/cmake/rosidl_target_interfaces.cmake"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 18,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 26,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 52,
+				"parent" : 2
+			},
+			{
+				"command" : 3,
+				"file" : 1,
+				"line" : 55,
+				"parent" : 2
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 24,
+				"parent" : 0
+			},
+			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 11,
+				"parent" : 0
+			},
+			{
+				"command" : 5,
+				"file" : 0,
+				"line" : 19,
+				"parent" : 0
+			},
+			{
+				"command" : 5,
+				"file" : 1,
+				"line" : 54,
+				"parent" : 2
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : " "
+				},
+				{
+					"backtrace" : 6,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 6,
+					"fragment" : "-Wextra"
+				},
+				{
+					"backtrace" : 6,
+					"fragment" : "-Wpedantic"
+				},
+				{
+					"fragment" : "-std=gnu++14"
+				}
+			],
+			"defines" : 
+			[
+				{
+					"backtrace" : 4,
+					"define" : "RCUTILS_ENABLE_FAULT_INJECTION"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 7,
+					"path" : "/home/ubuntu/project/nandhi/drivers/imu_sensor/include"
+				},
+				{
+					"backtrace" : 8,
+					"path" : "/home/ubuntu/project/nandhi/build/nandhi_msg_types/rosidl_generator_cpp"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/ubuntu/project/nandhi/drivers/i2c_com/include"
+				},
+				{
+					"backtrace" : 4,
+					"isSystem" : true,
+					"path" : "/opt/ros/galactic/include"
+				}
+			],
+			"language" : "CXX",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 3,
+			"id" : "nandhi_msg_types::@232236f38cbbf90376f9"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "nandhi_msg_types__rosidl_typesupport_cpp::@232236f38cbbf90376f9"
+		},
+		{
+			"backtrace" : 5,
+			"id" : "driver_i2c_com::@21ffe262329a411c50d7"
+		}
+	],
+	"id" : "imu_sensor::@3e0acb8465dba2f08b82",
+	"name" : "imu_sensor",
+	"nameOnDisk" : "libimu_sensor.a",
+	"paths" : 
+	{
+		"build" : "drivers/imu_sensor",
+		"source" : "drivers/imu_sensor"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "drivers/imu_sensor/src/imu_sensor.cc",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

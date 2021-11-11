@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../drivers/rpm_2_encoder/include/rpm/rpm.hh
+
+/home/ubuntu/project/nandhi/drivers/rpm_2_encoder/test/test_rpm.cc
+rpm/rpm.hh
+/home/ubuntu/project/nandhi/drivers/rpm_2_encoder/test/rpm/rpm.hh
+iostream
+-
+wiringPi.h
+-
+

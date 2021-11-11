@@ -1,0 +1,3 @@
+source;share/ego_viz/environment/ament_prefix_path.sh
+source;share/ego_viz/environment/library_path.sh
+source;share/ego_viz/environment/path.sh

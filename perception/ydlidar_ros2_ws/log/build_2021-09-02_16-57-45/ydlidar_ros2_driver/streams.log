@@ -1,0 +1,6 @@
+[0.082s] Invoking command in '/home/ubuntu/project/nandhi/perception/ydlidar_ros2_ws/build/ydlidar_ros2_driver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/ubuntu/project/nandhi/perception/ydlidar_ros2_ws/build/ydlidar_ros2_driver -- -j4 -l4
+[0.128s] CMake Error: The current CMakeCache.txt directory /home/ubuntu/project/nandhi/perception/ydlidar_ros2_ws/build/ydlidar_ros2_driver/CMakeCache.txt is different than the directory /home/ubuntu/project/perception/ydlidar_ros2_ws/build/ydlidar_ros2_driver where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt
+[0.176s] CMake Error: The source directory "/home/ubuntu/project/perception/ydlidar_ros2_ws/src/ydlidar_ros2_driver" does not exist.
+[0.176s] Specify --help for usage, or press the help button on the CMake GUI.
+[0.179s] make: *** [Makefile:310: cmake_check_build_system] Error 1
+[0.192s] Invoked command in '/home/ubuntu/project/nandhi/perception/ydlidar_ros2_ws/build/ydlidar_ros2_driver' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/ubuntu/project/nandhi/perception/ydlidar_ros2_ws/build/ydlidar_ros2_driver -- -j4 -l4

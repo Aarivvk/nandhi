@@ -1,0 +1,2 @@
+/usr/bin/ar qc libimu_sensor.a  CMakeFiles/imu_sensor.dir/src/imu_sensor.cc.o
+/usr/bin/ranlib libimu_sensor.a

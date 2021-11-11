@@ -1,0 +1,2 @@
+/usr/bin/ar qc libdriver_rpm.a  CMakeFiles/driver_rpm.dir/src/rpm.cc.o
+/usr/bin/ranlib libdriver_rpm.a

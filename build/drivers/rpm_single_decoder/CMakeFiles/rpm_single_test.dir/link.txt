@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/rpm_single_test.dir/test/test_rpm_single.cc.o  -o rpm_single_test  -Wl,-rpath,/usr/local/lib libdriver_rpm_single.a /usr/local/lib/libwiringPi.so -lpthread -lrt -lcrypt 

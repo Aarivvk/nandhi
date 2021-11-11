@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../drivers/l298n_dc/include/l298n_dc/l298n_dc.hh
+iostream
+-
+
+/home/ubuntu/project/nandhi/drivers/l298n_dc/test/test_l298n_dc.cc
+l298n_dc/l298n_dc.hh
+/home/ubuntu/project/nandhi/drivers/l298n_dc/test/l298n_dc/l298n_dc.hh
+wiringPi.h
+-
+signal.h
+-
+
