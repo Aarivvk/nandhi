@@ -13,17 +13,17 @@ void signal_cb(int num)
 int main()
 {
         signal(SIGINT, signal_cb);
-        L298n_dc motor_driver_front(1, 4, 5, 26, 31, 11);
-        L298n_dc motor_driver_back(23, 0, 2, 24, 3, 12);
-        int16_t speed = 600;
+        L298n_dc motor_driver_front(1, 5, 4, 26, 31, 11);
+        L298n_dc motor_driver_back(23, 0, 2, 24, 12, 3);
+        int16_t speed = 500;
         bool togel = false;
         while (run)
         {
                 std::cout << "\r" << "Speed " << speed  << std::flush;
                 // motor_driver_front.setSpeed(speed, speed);
                 // motor_driver_front.forward();
-                // motor_driver_back.setSpeed(speed, speed);
-                // motor_driver_back.forward();
+                motor_driver_back.setSpeed(speed, speed);
+                motor_driver_back.forward();
                 delay(100);
                 // motor_driver_front.reverse();
                 // delay(3000);
@@ -39,13 +39,13 @@ int main()
                 }
                 if(togel)
                 {
-                        motor_driver_front.forward();
+                        // motor_driver_front.forward();
                         motor_driver_back.forward();
                         speed--;
                 }
                 else
                 {
-                        motor_driver_front.reverse();
+                        // motor_driver_front.reverse();
                         motor_driver_back.reverse();
                         speed++;
                 }

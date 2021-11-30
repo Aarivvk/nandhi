@@ -24,7 +24,9 @@ L298n_dc::~L298n_dc()
 // speed value of max 1023
 void L298n_dc::setSpeed(int speedA, int speedB)
 {
+    if(speedA != enA_)
     pwmWrite(enA_, speedA);
+    if(speedB != enB_)
     pwmWrite(enB_, speedB);
 
 }

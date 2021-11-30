@@ -17,6 +17,7 @@ private:
     double rpm{0};
     TimePoint prev_time{};
     std::chrono::duration<double> dt_time_last{};
+    uint count{0};
 
     static void pulse();
     void calculateRPM();

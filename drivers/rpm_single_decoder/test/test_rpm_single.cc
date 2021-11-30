@@ -12,15 +12,14 @@ void signal_cb(int signal)
 int main(void)
 {
    signal(SIGINT, signal_cb);
-   RMPSingle rpms(6, 10);
-
+   RMPSingle rpms(6, 20);
+auto crmpnc = 0.22;
    while (run)
    {
-       std::cout << "curent RMP " << rpms.getRPM() << std::endl;
+       auto rpm = rpms.getRPM();
+       std::cout << "\rcurent RMP " << rpm << " Speed " << (rpm*crmpnc)/60 ;
        delay(10);
    }
-   
-
    
   return 0;
 }

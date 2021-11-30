@@ -38,7 +38,7 @@ void EgoViz::timer_callback()
 {
     visualization_msgs::msg::Marker ego = visualization_msgs::msg::Marker();
     
-    ego.header.frame_id = "map";
+    ego.header.frame_id = "base_link";
     ego.header.stamp = rclcpp::Time();
     ego.ns = "ego";
     ego.id = 0;
@@ -51,9 +51,9 @@ void EgoViz::timer_callback()
     ego.pose.orientation.y = ego_state.orientation.y;
     ego.pose.orientation.z = ego_state.orientation.z;
     ego.pose.orientation.w = 1.0;
-    ego.scale.x = 1;
-    ego.scale.y = 2;
-    ego.scale.z = 1;
+    ego.scale.x = 0.15;
+    ego.scale.y = 0.3;
+    ego.scale.z = 0.15;
     ego.color.a = 1.0; // Don't forget to set the alpha!
     ego.color.r = 0.0;
     ego.color.g = 1.0;

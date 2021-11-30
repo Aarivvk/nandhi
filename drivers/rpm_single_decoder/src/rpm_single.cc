@@ -5,16 +5,15 @@ RMPSingle *RMPSingle::myself;
 RMPSingle::RMPSingle(size_t pin, size_t nslots)
 {
 
-   num_slots = nslots;
-   myself = this;
-    
-   wiringPiSetup();
+    num_slots = nslots;
+    myself = this;
 
-   pinMode(pin, INPUT);
+    wiringPiSetup();
 
-   wiringPiISR(pin, INT_EDGE_FALLING, &RMPSingle::pulse);
+    pinMode(pin, INPUT);
+
+    wiringPiISR(pin, INT_EDGE_FALLING, &RMPSingle::pulse);
 }
-
 
 RMPSingle::~RMPSingle()
 {
@@ -22,14 +21,20 @@ RMPSingle::~RMPSingle()
 
 void RMPSingle::pulse()
 {
-    myself->calculateRPM();
+    myself->count++;
+    if ((myself->count % myself->num_slots) == 0)
+    {
+        myself->calculateRPM();
+        myself->count = 0;
+    }
 }
 
 void RMPSingle::calculateRPM()
 {
     auto now_time = Clock::now();
     std::chrono::duration<double> dt_time = now_time - prev_time;
-    rpm = (1 / (num_slots * (dt_time.count()/60)));
+    // rpm = (count / (num_slots * (dt_time.count() / 60)));
+    rpm = (1*60)/dt_time.count();
     prev_time = now_time;
     dt_time_last = dt_time;
 }
@@ -37,9 +42,5 @@ void RMPSingle::calculateRPM()
 double RMPSingle::getRPM()
 {
     std::chrono::duration<double> dt_time_now = Clock::now() - prev_time;
-    if(dt_time_last < dt_time_now)
-    {
-        rpm = 0;
-    }
     return rpm;
 }
