@@ -1,57 +1,34 @@
 #include "l298n_dc/l298n_dc.hh"
-#include <wiringPi.h>
 #include <signal.h>
+#include <vector>
+#include <wiringPi.h>
 
+bool run = true;
 
-bool run= true;
+void signal_cb(int num) { run = false; }
 
-void signal_cb(int num)
-{
-        run= false;
-}
+int main() {
+  signal(SIGINT, signal_cb);
+  L298n_dc motor_driver_right(1, 4, 5, 26, 31, 11);
+  L298n_dc motor_driver_left(23, 2, 0, 24, 12, 3);
+  auto wlsr = motor_driver_right.getWheels();
+  auto wlsl = motor_driver_left.getWheels();
 
-int main()
-{
-        signal(SIGINT, signal_cb);
-        L298n_dc motor_driver_front(1, 5, 4, 26, 31, 11);
-        L298n_dc motor_driver_back(23, 0, 2, 24, 12, 3);
-        int16_t speed = 500;
-        bool togel = false;
-        while (run)
-        {
-                std::cout << "\r" << "Speed " << speed  << std::flush;
-                // motor_driver_front.setSpeed(speed, speed);
-                // motor_driver_front.forward();
-                motor_driver_back.setSpeed(speed, speed);
-                motor_driver_back.forward();
-                delay(100);
-                // motor_driver_front.reverse();
-                // delay(3000);
-                // motor_driver_front.clockwiseDiff();
-                // delay(3000);
-                // motor_driver_front.antiClockwiseDiff();
-                // delay(3000);
-                // motor_driver_front.stop();
-
-                if(1023 == speed || 434 == speed)
-                {
-                        togel = !togel;
-                }
-                if(togel)
-                {
-                        // motor_driver_front.forward();
-                        motor_driver_back.forward();
-                        speed--;
-                }
-                else
-                {
-                        // motor_driver_front.reverse();
-                        motor_driver_back.reverse();
-                        speed++;
-                }
-
-                
-        }
-        motor_driver_front.stop();
-        motor_driver_back.stop();
+  for (auto w : wlsl) {
+    w->setDirection(DIRECTION::FORWARD);
+    w->setSpeed(100);
+    w->print();
+  }
+  for (auto w : wlsr) {
+    w->setDirection(DIRECTION::FORWARD);
+    w->setSpeed(100);
+    w->print();
+  }
+  motor_driver_right.flush();
+  motor_driver_left.flush();
+  while (run) {
+    delay(2000);
+  }
+  motor_driver_right.stopAll();
+  motor_driver_left.stopAll();
 }
