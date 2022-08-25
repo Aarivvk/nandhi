@@ -1,5 +1,2 @@
 add_subdirectory(i2c_com)
 add_subdirectory(imu_sensor)
-add_subdirectory(l298n_dc)
-add_subdirectory(rpm_2_encoder)
-add_subdirectory(rpm_single_decoder)
