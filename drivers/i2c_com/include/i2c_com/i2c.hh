@@ -24,8 +24,9 @@ using RequestResponse = std::vector<SigNameRV>;
 class I2cDevice
 {
 private:
-    uint8_t addr{}; /* The I2C device address ex. 0x68 for MPU6050*/
+    uint8_t addr{}; /* The I2C device address ex. 0x68 for MPU6050, 0x40 for PCA9685*/
     RequestResponse reg_map_read{};
+    RequestResponse reg_map_write{};
     RequestResponse reg_map_config_write{};
     RequestResponse reg_map_config_read{};
 
@@ -34,11 +35,13 @@ public:
     ~I2cDevice();
     uint8_t getAddress();
     RequestResponse* getRegMapRequest();
+    RequestResponse* getRegMapCommand();
     RequestResponse* getRegMapConfigWrite();
     RequestResponse* getRegMapConfigRead();
     void addConfig(std::string sig_name, uint8_t req, uint8_t val);
     void addConfig(std::string sig_name, uint8_t req);
     void addRequest(std::string, uint8_t reg);
+    void addCommand(std::string, uint8_t reg, int val);
     int getResponse(std::string sig_name);
     int getConfig(std::string sig_name);
 
