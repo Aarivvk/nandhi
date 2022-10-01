@@ -20,7 +20,7 @@ int main()
     PCA9685 pca = PCA9685(8, 0x40);
 
     int servo_min = 250;  // Min pulse length out of 4096
-    int servo_mid = 350;
+    int servo_mid = 340;
     int servo_max = 450;  // Max pulse length out of 4096
     pca.setPWMFreq(55);
 
