@@ -34,6 +34,12 @@ void I2cDevice::addRequest(std::string sig_name, uint8_t reg)
     reg_map_read.push_back(SigNameRV(sig_name, p));
 }
 
+void I2cDevice::addCommand(std::string sig_name, uint8_t reg, int val)
+{
+    std::pair<uint8_t, int> p{reg, val};
+    reg_map_write.push_back(SigNameRV(sig_name, p));
+}
+
 int I2cDevice::getResponse(std::string sig_name)
 {
     int result = -1;
@@ -83,6 +89,11 @@ uint8_t I2cDevice::getAddress()
 RequestResponse* I2cDevice::getRegMapRequest()
 {
     return &reg_map_read;
+}
+
+RequestResponse* I2cDevice::getRegMapCommand()
+{
+    return &reg_map_write;
 }
 
 RequestResponse* I2cDevice::getRegMapConfigWrite()
@@ -174,6 +185,19 @@ int I2cBus::receive()
         // std::cout << request.first << " " << std::to_string(request.second.first) << " " << std::to_string(request.second.second) << std::endl;
         if (0 > request.second.second) ret = -1;
         
+    }
+
+    return ret;
+}
+
+int I2cBus::send()
+{
+    int ret = 0;
+    for (auto& command : *curent_device->getRegMapCommand())
+    {
+        auto res = i2c_smbus_write_byte_data(file_discriptor_, command.second.first, command.second.second);
+        // std::cout << command.first << " " << std::to_string(command.second.first) << " " << std::to_string(command.second.second) << std::endl;
+        if (0 > ret) ret = -1;
     }
 
     return ret;
