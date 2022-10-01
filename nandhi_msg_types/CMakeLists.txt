@@ -14,6 +14,8 @@ rosidl_generate_interfaces(${PROJECT_NAME}
    "msg/Pose.msg"
    "msg/Orientation.msg"
    "msg/EgoState.msg"
+   "msg/AckermannDrive.msg"
+   "msg/AckermannDriveStamped.msg"
  )
  
 ament_package()
