@@ -56,9 +56,9 @@ inline int PCA9685::getLEDReg(int reg, int led)
 
 //! PWM a single channel with custom on time
 /*!
- \param led channel (1-16) to set PWM value for
- \param on_value 0-4095 value to turn on the pulse
- \param off_value 0-4095 value to turn off the pulse
+ \param led The channel that should be updated with the new values (0..15).
+ \param on_value The tick (between 0..4095) when the signal should transition from low to high.
+ \param off_value The tick (between 0..4095) when the signal should transition from high to low.
  */
 void PCA9685::setPWM(uint8_t led, int on_value, int off_value) 
 {
