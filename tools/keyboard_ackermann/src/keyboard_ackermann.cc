@@ -1,5 +1,4 @@
 #include "keyboard_ackermann/keyboard_ackermann.hh"
-#include <nandhi_msg_types/msg/AckermannDrive.idl>
 
 #include <iostream>
 #include <chrono>
@@ -8,6 +7,8 @@
 #include <memory>
 #include <signal.h>
 #include <stdio.h>
+
+using namespace std::chrono_literals;
 
 bool terminate{false};
 
@@ -80,14 +81,14 @@ void KeyEventManager::run()
     while (!terminate)
     {
         read_key_press();
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(40));
     }
 }
 
 keyboard_ackermann::keyboard_ackermann(/* args */) : Node("keyboard_ackermann"){
-    m_publisher = this->create_publisher<std_msgs::msg::String>("ackermann_cmd", 10);
+    m_publisher = this->create_publisher<nandhi_msg_types::msg::AckermannDrive>("ackermann_cmd", 10);
     m_timer = this->create_wall_timer(
-        50ms, std::bind(&MinimalPublisher::timer_callback, this));
+        50ms, std::bind(&keyboard_ackermann::timer_callback, this));
 }
 
 keyboard_ackermann::~keyboard_ackermann()

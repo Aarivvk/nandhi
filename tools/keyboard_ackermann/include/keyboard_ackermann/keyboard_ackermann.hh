@@ -1,10 +1,13 @@
 #include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/string.hpp"
+#include "nandhi_msg_types/msg/ackermann_drive.hpp"
 
 class keyboard_ackermann : public rclcpp::Node
 {
 private:
+  float m_speed{}, m_acceleration{}, m_jerk{};
   rclcpp::TimerBase::SharedPtr m_timer;
-  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr m_publisher;
+  rclcpp::Publisher<nandhi_msg_types::msg::AckermannDrive>::SharedPtr m_publisher;
 
   void timer_callback();
 
