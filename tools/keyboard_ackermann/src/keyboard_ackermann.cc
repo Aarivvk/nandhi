@@ -1,4 +1,5 @@
 #include "keyboard_ackermann/keyboard_ackermann.hh"
+#include "nandhi_msg_types/msg/ackermann_drive.hpp"
 
 #include <iostream>
 #include <chrono>
@@ -18,7 +19,7 @@ void terminate_sig(int s)
     terminate = true;
 }
 
-KeyEventManager::KeyEventManager()
+KeyEventManager::KeyEventManager() : Node("keyboard_event_listner")
 {
     system("stty raw");
     system("stty -echo");
@@ -30,7 +31,6 @@ KeyEventManager::~KeyEventManager()
     m_key_thread_ptr->join();
     system("stty cooked");
     system("stty echo");
-    std::cout << "KeyEventManager Ended!!" << std::endl;
 }
 
 KEY KeyEventManager::get_key()
@@ -62,7 +62,7 @@ void KeyEventManager::setKey(char key)
         m_key = KEY::Down;
         break;
     default:
-        std::cerr << "Unknown key recived: " << key << std::endl;
+        // std::cerr << "Unknown key recived: " << key << std::endl;
         m_key = KEY::Stop;
         terminate = true;
         break;
@@ -85,8 +85,9 @@ void KeyEventManager::run()
     }
 }
 
-keyboard_ackermann::keyboard_ackermann(/* args */) : Node("keyboard_ackermann"){
-    m_publisher = this->create_publisher<nandhi_msg_types::msg::AckermannDrive>("ackermann_cmd", 10);
+keyboard_ackermann::keyboard_ackermann(/* args */) : Node("keyboard_ackermann_cmd")
+{
+    m_publisher = this->create_publisher<nandhi_msg_types::msg::AckermannDrive>("/ackermann_cmd", 10);
     m_timer = this->create_wall_timer(
         50ms, std::bind(&keyboard_ackermann::timer_callback, this));
 }
@@ -97,31 +98,41 @@ keyboard_ackermann::~keyboard_ackermann()
 
 void keyboard_ackermann::timer_callback()
 {
-    auto message = nandhi_msg_types::msg::AckermannDrive();
-    message.speed = m_speed;
-    message.acceleration = m_acceleration;
-    message.jerk = m_jerk;
-    m_publisher->publish(message);
+    std::lock_guard<std::mutex> guard(m_msg_mutex);
+    m_publisher->publish(m_message);
 }
 
-int main()
+void keyboard_ackermann::set_msg(nandhi_msg_types::msg::AckermannDrive msg)
 {
-    signal(SIGINT, terminate_sig);
+    std::lock_guard<std::mutex> guard(m_msg_mutex);
+    m_message = msg;
+}
 
-    KeyEventManager key_man{};
+int main(int argc, char *argv[])
+{
+    std::cout << "start main " << std::endl;
+    signal(SIGINT, terminate_sig);
+    rclcpp::init(argc, argv);
     KEY key{KEY::Stop};
 
     constexpr int servo_min = 250; // Min pulse length out of 4096
     constexpr int servo_mid = 340;
     constexpr int servo_max = 450; // Max pulse length out of 4096
-    constexpr int speed_inc = 10;
-    constexpr int steering_inc = 10;
+    constexpr int speed_inc = 5;
+    constexpr int steering_inc = 5;
 
-    int speed{servo_min}, steering{servo_min};
+    int speed{servo_mid}, steering{servo_mid};
+
+    rclcpp::executors::MultiThreadedExecutor executor;
+    auto ros2_ackerman_pub = std::make_shared<keyboard_ackermann>();
+    auto key_man = std::make_shared<KeyEventManager>();
+    executor.add_node(ros2_ackerman_pub);
+    executor.add_node(key_man);
+    executor.spin_once();
 
     while (!terminate)
     {
-        key = key_man.get_key();
+        key = key_man->get_key();
         switch (key)
         {
         case KEY::Up:
@@ -157,10 +168,16 @@ int main()
             break;
         }
 
-        // std::cout << " steering " << steering << " speed " << speed << std::endl;
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        nandhi_msg_types::msg::AckermannDrive msg{};
+        msg.speed = speed;
+        msg.steering_angle = steering;
+        ros2_ackerman_pub->set_msg(msg);
+
+        executor.spin_once();
+        std::this_thread::sleep_for(std::chrono::milliseconds(40));
     }
 
+    rclcpp::shutdown();
     std::cout << "Program terminated!!" << std::endl;
     return 0;
 }
