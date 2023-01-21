@@ -7,9 +7,15 @@
   <maintainer email="vinaya.rvce@gmail.com">vk</maintainer>
   <license>MIT</license>
 
-  <depend>rclcpp</depend>
-  <depend>nandhi_msg_types</depend>
-  <depend>sensor_msgs</depend>
+  <build_depend>rclcpp</build_depend>
+  <build_depend>nandhi_msg_types</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>imu_sensor</build_depend>
+
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>nandhi_msg_types</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>imu_sensor</exec_depend>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 

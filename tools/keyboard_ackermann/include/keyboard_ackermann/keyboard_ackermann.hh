@@ -1,5 +1,4 @@
 #include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
 #include "nandhi_msg_types/msg/ackermann_drive.hpp"
 
 class keyboard_ackermann : public rclcpp::Node

@@ -7,7 +7,7 @@
   <maintainer email="vinaya.rvce@gmail.com">vk</maintainer>
   <license>MIT</license>
 
-  <depend>i2c</depend>
+  <build_depend>i2c</build_depend>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 

@@ -1,1 +1,0 @@
-add_subdirectory(ros2_ego_state)

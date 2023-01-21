@@ -1,28 +1,46 @@
 cmake_minimum_required(VERSION 3.16.3)
 
-set(target vehicle_control_system)
+project(vehicle_control_system)
+
+# Default to C++17
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 17)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+endif()
+
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
 
 # Find packages
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(i2c_pwm_pca9685 REQUIRED)
+find_package(nandhi_msg_types REQUIRED)
+find_library(pthread REQUIRED)
 
 set(SRCS "src/vcs.cc")
-add_executable(${target} ${SRCS})
-target_include_directories(${target} PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>
-  $<INSTALL_INTERFACE:include/>  # <prefix>/include/mylib
+add_executable(${PROJECT_NAME} ${SRCS})
+target_include_directories(${PROJECT_NAME} PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 )
-
-ament_target_dependencies(${target}
+ament_target_dependencies(${PROJECT_NAME}
   rclcpp
-  # i2c_pwm_pca9685
+  i2c_pwm_pca9685
+  i2c_com
+  nandhi_msg_types
 )
-rosidl_target_interfaces(${target} nandhi_msg_types "rosidl_typesupport_cpp")
-# target_link_libraries(${target} PUBLIC i2c_pwm_pca9685)
 
 # Testing the PCA9685 moduel.
 enable_testing()
-add_executable(${target}_test test/test_vcs.cc)
-target_link_libraries(${target}_test PRIVATE pthread i2c_pwm_pca9685)
-add_test(NAME ${target}_test COMMAND ${target}_test)
+add_executable(${PROJECT_NAME}_test test/test_vcs.cc)
+ament_target_dependencies(${PROJECT_NAME}_test 
+  rclcpp
+  i2c_pwm_pca9685
+  i2c_com
+  nandhi_msg_types
+)
+add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}_test)
+
+
+ament_package()

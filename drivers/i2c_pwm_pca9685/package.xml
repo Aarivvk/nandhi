@@ -7,9 +7,10 @@
   <maintainer email="vinaya.rvce@gmail.com">vk</maintainer>
   <license>MIT</license>
 
-  <build_depend>i2c_com</build_depend>
-
   <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <build_depend>i2c_com</build_depend>
+  <exec_depend>i2c_com</exec_depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>

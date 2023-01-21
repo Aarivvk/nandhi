@@ -24,8 +24,9 @@ rosidl_generate_interfaces(${PROJECT_NAME}
    "msg/EgoState.msg"
    "msg/AckermannDrive.msg"
    "msg/AckermannDriveStamped.msg"
+   DEPENDENCIES builtin_interfaces std_msgs geometry_msgs
+   ADD_LINTER_TESTS
  )
-
 
 ament_export_dependencies(rosidl_default_runtime)
  

@@ -13,21 +13,31 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
+find_library(i2c REQUIRED)
 
 set(SRCS "src/i2c.cc")
 add_library(${PROJECT_NAME} STATIC ${SRCS})
 target_link_libraries(${PROJECT_NAME} PUBLIC i2c)
 target_include_directories(${PROJECT_NAME} PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/>
-  $<INSTALL_INTERFACE:include/>  # <prefix>/include/mylib
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>  # <prefix>/include/mylib
 )
 
+ament_export_include_directories(include)
+ament_export_libraries(${PROJECT_NAME} i2c)
 
 # Testing the rpm moduel.
 enable_testing()
 add_executable(${PROJECT_NAME}_test test/test_i2c.cc)
 target_link_libraries(${PROJECT_NAME}_test PRIVATE ${PROJECT_NAME})
 add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}_test)
+
+
+# Install section.
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
 
 install(TARGETS
     ${PROJECT_NAME}
