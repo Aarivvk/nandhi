@@ -36,4 +36,12 @@ ament_target_dependencies(${PROJECT_NAME}
 #   nandhi_msg_types
 # )
 
+install(
+  TARGETS ${PROJECT_NAME}
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
+)
+
 ament_package()
