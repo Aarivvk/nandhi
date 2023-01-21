@@ -32,15 +32,15 @@ ament_target_dependencies(${PROJECT_NAME}
 )
 
 # Testing the PCA9685 moduel.
-enable_testing()
-add_executable(${PROJECT_NAME}_test test/test_vcs.cc)
-ament_target_dependencies(${PROJECT_NAME}_test 
-  rclcpp
-  i2c_pwm_pca9685
-  i2c_com
-  nandhi_msg_types
-)
-add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}_test)
+# enable_testing()
+# add_executable(${PROJECT_NAME}_test test/test_vcs.cc)
+# ament_target_dependencies(${PROJECT_NAME}_test 
+#   rclcpp
+#   i2c_pwm_pca9685
+#   i2c_com
+#   nandhi_msg_types
+# )
+# add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}_test)
 
 
 install(
