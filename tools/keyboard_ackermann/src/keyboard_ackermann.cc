@@ -15,7 +15,6 @@ bool terminate{false};
 
 void terminate_sig(int s)
 {
-    std::cout << "\nCaught signal " << s << std::endl;
     terminate = true;
 }
 
@@ -110,14 +109,13 @@ void keyboard_ackermann::set_msg(nandhi_msg_types::msg::AckermannDrive msg)
 
 int main(int argc, char *argv[])
 {
-    std::cout << "start main " << std::endl;
     signal(SIGINT, terminate_sig);
     rclcpp::init(argc, argv);
     KEY key{KEY::Stop};
 
-    constexpr int servo_min = 250; // Min pulse length out of 4096
-    constexpr int servo_mid = 350;
-    constexpr int servo_max = 450; // Max pulse length out of 4096
+    constexpr int servo_min = -100; // Min pulse length out of 4096
+    constexpr int servo_mid = 0;
+    constexpr int servo_max = 100; // Max pulse length out of 4096
     constexpr int speed_inc = 5;
     constexpr int steering_inc = 5;
 
@@ -178,6 +176,5 @@ int main(int argc, char *argv[])
     }
 
     rclcpp::shutdown();
-    std::cout << "Program terminated!!" << std::endl;
     return 0;
 }
