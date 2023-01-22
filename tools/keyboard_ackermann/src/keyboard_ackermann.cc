@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
     KEY key{KEY::Stop};
 
     constexpr int servo_min = 250; // Min pulse length out of 4096
-    constexpr int servo_mid = 340;
+    constexpr int servo_mid = 350;
     constexpr int servo_max = 450; // Max pulse length out of 4096
     constexpr int speed_inc = 5;
     constexpr int steering_inc = 5;
