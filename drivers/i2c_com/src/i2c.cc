@@ -183,7 +183,11 @@ int I2cBus::receive()
     {
         request.second.second = i2c_smbus_read_byte_data(file_discriptor_, request.second.first);
         // std::cout << request.first << " " << std::to_string(request.second.first) << " " << std::to_string(request.second.second) << std::endl;
-        if (0 > request.second.second) ret = -1;
+        if (0 > request.second.second)
+        {
+            std::cerr << "I2C device " << curent_device->getAddress() << "did not respond!!" << std::endl;
+            ret = -1;
+        } 
         
     }
 

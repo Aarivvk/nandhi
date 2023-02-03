@@ -5,16 +5,25 @@
 import os
 import sys
 
-build_cmd = "colcon build --packages-skip vehicle_state_estimator --symlink-install"
+build_cmd = "colcon build --symlink-install"
 
 os.system("/opt/ros/rolling/setup.zsh")
 
+MAIN_OPS = {"build": "builds the packages for you",
+            "install": "install the preriqisit drivers",
+            "clean": "Clean the install build and log folder"}
+
+
+def print_oops(ops):
+    for key, value in ops.items():
+        print(key + " : " + value)
+
 
 def build(sub_cmd, packages):
-    if(sub_cmd == "all"):
+    if (sub_cmd == "all"):
         res = os.system(build_cmd)
 
-    elif(sub_cmd == "package"):
+    elif (sub_cmd == "package"):
         res = os.system(build_cmd + " --packages-up-to" + packages)
     else:
         print("Invalid command\noptions are: \nall \npackage")
@@ -28,20 +37,26 @@ def install_driver():
 
 def run_option():
     if len(sys.argv) == 1:
-        print("options are: \nbuild \ninstall")
+        print("options are:")
+        print_oops(MAIN_OPS)
         exit()
 
     cmd = sys.argv[1]
-    if cmd == "build":
+    if cmd == list(MAIN_OPS.keys())[0]:
         param = ""
         sub_cmd = sys.argv[2]
         for i in range(3, len(sys.argv)):
             param = param + " " + sys.argv[i] + " "
         build(sub_cmd, param)
-    elif cmd == "install":
+    elif cmd == list(MAIN_OPS.keys())[1]:
         install_driver()
+    elif cmd == list(MAIN_OPS.keys())[2]:
+        res = os.system("rm -rf build install log")
+        print("Deleted the build artifacts")
     else:
-        print("Invalid command\noptions are: \nbuild \ninstall")
+        print("Invalid command\noptions are:")
+        print_oops(MAIN_OPS)
+
 
 def main():
     print("Ambhaaa!")
