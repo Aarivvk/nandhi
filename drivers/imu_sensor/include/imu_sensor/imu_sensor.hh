@@ -54,7 +54,7 @@ private:
 
     double getTemp();
 public:
-    ImuSensor();
+    ImuSensor(int, int);
     ~ImuSensor();
     RawImuSensorData fetchEgoState();
     

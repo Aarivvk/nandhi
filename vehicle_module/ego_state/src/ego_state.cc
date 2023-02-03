@@ -41,7 +41,7 @@ class EgoViz : public rclcpp::Node
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Publisher<nandhi_msg_types::msg::EgoState>::SharedPtr publisher_ego_;
     rclcpp::Publisher<sensor_msgs::msg::Imu>::SharedPtr publisher_imu_;
-    ImuSensor imu;
+    ImuSensor imu{8, 0x68};
 };
 
 void EgoViz::printData(const RawImuSensorData &data) const

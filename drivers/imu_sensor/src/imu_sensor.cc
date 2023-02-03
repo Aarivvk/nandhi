@@ -1,8 +1,7 @@
 #include "imu_sensor/imu_sensor.hh"
 #include <math.h>
 
-
-ImuSensor::ImuSensor()
+ImuSensor::ImuSensor(int channel, int dev_addr) : i2c_chan_{channel}, dev_{dev_addr}
 {
     //Power on the device
     dev_.addConfig("MPU6050_PWR_MGMT_1", 0x6B, 0);
