@@ -1,15 +1,21 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>ego_viz</name>
+  <name>ego_state</name>
   <version>0.0.1</version>
   <description>A ROS2 package that recvies topics on ego ensor and publishes ros2 viz topics</description>
   <maintainer email="vinaya.rvce@gmail.com">vk</maintainer>
   <license>MIT</license>
 
-  <depend>rclcpp</depend>
-  <depend>visualization_msgs</depend>
-  <depend>nandhi_msg_types</depend>
+  <build_depend>rclcpp</build_depend>
+  <build_depend>nandhi_msg_types</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>imu_sensor</build_depend>
+
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>nandhi_msg_types</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>imu_sensor</exec_depend>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 

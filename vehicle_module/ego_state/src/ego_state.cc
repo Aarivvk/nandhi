@@ -71,7 +71,7 @@ void EgoViz::timer_callback()
   auto data = imu.fetchEgoState();
   sensor_msgs::msg::Imu imu_data;
   imu_data.header.stamp = this->get_clock()->now();
-  imu_data.header.frame_id = "base_link";
+  imu_data.header.frame_id = "nandhi_frame";
   imu_data.linear_acceleration.x = data.raw_acc_x;
   imu_data.linear_acceleration.y = data.raw_acc_y;// fix for MPU9250 make it z
   imu_data.linear_acceleration.z = data.raw_acc_z + 1;// fix for MPU9250 make it y
@@ -93,6 +93,7 @@ void EgoViz::timer_callback()
 
   publisher_ego_->publish(ego_);
   publisher_imu_->publish(imu_data);
+  printData(data);
 }
 
 int main(int argc, char * argv[])

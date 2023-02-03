@@ -12,7 +12,7 @@ class ImuSensor
 private:
     /* data */
     I2cDevice dev_{0x68};
-    I2cBus i2c_chan_{1};
+    I2cBus i2c_chan_{8};
 
     int16_t VAL_PER_G = 16384;
     float VAL_PER_DEG = 131;
