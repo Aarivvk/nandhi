@@ -16,7 +16,7 @@ class EgoViz : public rclcpp::Node
 {
   public:
     EgoViz()
-    : Node("minimal_publisher"), count_(0)
+    : Node("ego_state_viz"), count_(0)
     {
       publisher_ego_ = this->create_publisher<visualization_msgs::msg::Marker>( "ego_state_marker", 10 );
       sub_ego_ = this->create_subscription<nandhi_msg_types::msg::EgoState>("ego_state", 10, std::bind(&EgoViz::on_topic_ego_state, this, std::placeholders::_1));
@@ -37,8 +37,8 @@ class EgoViz : public rclcpp::Node
 void EgoViz::timer_callback()
 {
     visualization_msgs::msg::Marker ego = visualization_msgs::msg::Marker();
-    
-    ego.header.frame_id = "base_link";
+
+    ego.header.frame_id = "nandhi_frame";
     ego.header.stamp = rclcpp::Time();
     ego.ns = "ego";
     ego.id = 0;
