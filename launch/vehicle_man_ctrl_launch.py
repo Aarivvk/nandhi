@@ -21,15 +21,21 @@ def generate_launch_description():
         namespace='nandhi',
         executable='keyboard_ackermann',
         name='Key_listner',
-        emulate_tty=True
+        emulate_tty=True,
+        output='screen'
     )
-
+    ego_viz_node = Node(
+        package='ego_viz',
+        namespace='nandhi',
+        executable='ego_viz',
+        name='ego_viz'
+    )
     rviz2_node = Node(package='rviz2',
-                      node_executable='rviz2',
-                      node_name='rviz2',
+                      executable='rviz2',
+                      name='rviz2',
                       arguments=['-d', rviz_config_file],
                      )
     return LaunchDescription([
-        Key_listner,
-        rviz2_node
+        rviz2_node,
+        ego_viz_node
     ])
