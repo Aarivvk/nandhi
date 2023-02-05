@@ -1,6 +1,6 @@
 [submodule "drivers/YDLidar-SDK"]
 	path = drivers/YDLidar-SDK
 	url = git@github.com:YDLIDAR/YDLidar-SDK.git
-[submodule "perception/ydlidar_ros2_driver"]
-	path = perception/ydlidar_ros2_driver
+[submodule "drivers/ydlidar_ros2_driver"]
+	path = drivers/ydlidar_ros2_driver
 	url = git@github.com:YDLIDAR/ydlidar_ros2_driver.git
