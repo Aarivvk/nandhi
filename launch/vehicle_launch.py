@@ -45,10 +45,19 @@ def generate_launch_description():
         executable='ego_state',
         name='ego_state'
     )
+
+    camera_node = Node(
+        package='camera_driver',
+        namespace='nandhi',
+        executable='camera_driver',
+        name='camera_driver'
+    )
+
     return LaunchDescription([
         params_declare,
         lidar_driver_node,
         tf2_node,
         vcs_node,
-        vehicle_state_node
+        vehicle_state_node,
+        camera_node
     ])

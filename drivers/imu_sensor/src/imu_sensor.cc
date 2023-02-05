@@ -52,9 +52,9 @@ ImuSensor::ImuSensor(int channel, int dev_addr) : i2c_chan_{channel}, dev_{dev_a
     readConfigurationAcc();
     readConfigurationGyro();
     // readConfigurationDLPF();
-    if(calibrateDevice())
+    if(!calibrateDevice())
     {
-        //TODO: Throw an error if failed to conlibrate.
+        throw std::runtime_error("Failed to calibrate IMU sensor!!");
     }
 }
 
