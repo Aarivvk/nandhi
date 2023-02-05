@@ -23,25 +23,32 @@ def generate_launch_description():
                                       output='screen',
                                       emulate_tty=True,
                                       parameters=[parameter_file],
-                                      namespace='/',
+                                      namespace='nandhi',
                                       )
+
     tf2_node = Node(package='tf2_ros',
                     executable='static_transform_publisher',
                     name='static_tf_pub_laser',
                     arguments=['0', '0', '0.02', '0', '0',
                                '0', '1', 'base_link', 'nandhi_frame'],
                     )
+
     vcs_node = Node(
         package='vehicle_control_system',
         namespace='nandhi',
         executable='vehicle_control_system',
-        name='VCS'
+        name='VCS',
+        output='screen',
+        emulate_tty=True
     )
+
     vehicle_state_node = Node(
         package='ego_state',
         namespace='nandhi',
         executable='ego_state',
-        name='VS'
+        name='VS',
+        output='screen',
+        emulate_tty=True
     )
     return LaunchDescription([
         params_declare,
