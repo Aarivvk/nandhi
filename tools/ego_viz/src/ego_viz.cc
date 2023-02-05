@@ -40,7 +40,6 @@ void EgoViz::timer_callback()
 
     ego.header.frame_id = "nandhi_frame";
     ego.header.stamp = rclcpp::Time();
-    ego.ns = "ego";
     ego.id = 0;
     ego.type = visualization_msgs::msg::Marker::CUBE;
     ego.action = visualization_msgs::msg::Marker::ADD;
