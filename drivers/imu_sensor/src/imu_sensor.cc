@@ -52,9 +52,9 @@ ImuSensor::ImuSensor(int channel, int dev_addr) : i2c_chan_{channel}, dev_{dev_a
     readConfigurationAcc();
     readConfigurationGyro();
     // readConfigurationDLPF();
-    if(calibrateDevice())
+    if(!calibrateDevice())
     {
-        throw std::runtime_error("Failed to open the camera");
+        throw std::runtime_error("Failed to calibrate IMU sensor!!");
     }
 }
 
