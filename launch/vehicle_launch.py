@@ -37,18 +37,14 @@ def generate_launch_description():
         package='vehicle_control_system',
         namespace='nandhi',
         executable='vehicle_control_system',
-        name='VCS',
-        output='screen',
-        emulate_tty=True
+        name='VCS'
     )
 
     vehicle_state_node = Node(
         package='ego_state',
         namespace='nandhi',
         executable='ego_state',
-        name='VS',
-        output='screen',
-        emulate_tty=True
+        name='ego_state'
     )
     return LaunchDescription([
         params_declare,
