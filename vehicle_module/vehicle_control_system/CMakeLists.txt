@@ -17,7 +17,6 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(i2c_pwm_pca9685 REQUIRED)
 find_package(nandhi_msg_types REQUIRED)
-find_library(pthread REQUIRED)
 
 set(SRCS "src/vcs.cc")
 add_executable(${PROJECT_NAME} ${SRCS})
