@@ -12,13 +12,13 @@ def generate_launch_description():
 
     ego_viz_node = Node(
         package='ego_viz',
-        namespace='vizualisation',
+        namespace='nandhi',
         executable='ego_viz',
         name='ego_viz'
     )
     rviz2_node = Node(package='rviz2',
                       executable='rviz2',
-                      namespace='vizualisation',
+                      namespace='/',
                       name='rviz2',
                       arguments=['-d', rviz_config_file],
                       )
