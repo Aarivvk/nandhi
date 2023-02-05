@@ -30,4 +30,7 @@ ament_target_dependencies(${PROJECT_NAME}
   nandhi_msg_types
 )
 
+install(TARGETS ${PROJECT_NAME}
+    DESTINATION lib/${PROJECT_NAME})
+
 ament_package()

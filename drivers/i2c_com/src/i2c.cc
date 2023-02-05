@@ -185,7 +185,7 @@ int I2cBus::receive()
         // std::cout << request.first << " " << std::to_string(request.second.first) << " " << std::to_string(request.second.second) << std::endl;
         if (0 > request.second.second)
         {
-            std::cerr << "I2C device " << curent_device->getAddress() << "did not respond!!" << std::endl;
+            // std::cerr << "I2C device " << curent_device->getAddress() << "did not respond!!" << std::endl;
             ret = -1;
         } 
         

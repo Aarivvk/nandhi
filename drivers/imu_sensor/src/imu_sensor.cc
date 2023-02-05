@@ -47,12 +47,15 @@ ImuSensor::ImuSensor(int channel, int dev_addr) : i2c_chan_{channel}, dev_{dev_a
 
     dev_.addRequest("MPU6050_TEMP_H", 0x41);
     dev_.addRequest("MPU6050_TEMP_L", 0x42);
-    i2c_chan_.setI2cDevice(&dev_);
-    i2c_chan_.configure();
+    i2c_chan_.setI2cDevice(&dev_); // TODO: Throw error on fail.
+    i2c_chan_.configure();         // TODO: Throw error on fail.
     readConfigurationAcc();
     readConfigurationGyro();
     // readConfigurationDLPF();
-    calibrateDevice();
+    if(calibrateDevice())
+    {
+        //TODO: Throw an error if failed to conlibrate.
+    }
 }
 
 ImuSensor::~ImuSensor()
@@ -62,10 +65,16 @@ ImuSensor::~ImuSensor()
 bool ImuSensor::calibrateDevice()
 {
     std::cout << "Calibrating ...." << std::endl;
-    bool sucess = false;
+    bool sucess = true;
     for (size_t i = 0; i < CALIB_REPS; i++)
     {
-        i2c_chan_.receive();
+        auto ret = i2c_chan_.receive();
+        if (ret == -1)
+        {
+            std::cout << "no response from I2C device!!" << std::endl;
+            sucess=false;
+            break;
+        }
         acc_off_set[0] += getXAcc();
         acc_off_set[1] += getYAcc();
         acc_off_set[2] += getZAcc();
@@ -90,7 +99,6 @@ bool ImuSensor::calibrateDevice()
     {
         std::cout << "Gyro : " << i << std::endl;
     }
-    sucess = true;
     return sucess;
 }
 

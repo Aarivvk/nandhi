@@ -93,7 +93,7 @@ void EgoViz::timer_callback()
 
   publisher_ego_->publish(ego_);
   publisher_imu_->publish(imu_data);
-  printData(data);
+  // printData(data);
 }
 
 int main(int argc, char * argv[])

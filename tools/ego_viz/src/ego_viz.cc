@@ -40,7 +40,6 @@ void EgoViz::timer_callback()
 
     ego.header.frame_id = "nandhi_frame";
     ego.header.stamp = rclcpp::Time();
-    ego.ns = "ego";
     ego.id = 0;
     ego.type = visualization_msgs::msg::Marker::CUBE;
     ego.action = visualization_msgs::msg::Marker::ADD;
@@ -64,8 +63,8 @@ void EgoViz::timer_callback()
 
 void EgoViz::on_topic_ego_state(const nandhi_msg_types::msg::EgoState::ConstSharedPtr msg)
 {
-  RCLCPP_INFO(this->get_logger(), "I heard: '%f' '%f' '%f'", msg->pose.x, msg->pose.y, msg->pose.z);
-  RCLCPP_INFO(this->get_logger(), "I heard: '%f' '%f' '%f'", msg->orientation.x, msg->orientation.y, msg->orientation.z);
+  // RCLCPP_INFO(this->get_logger(), "I heard: '%f' '%f' '%f'", msg->pose.x, msg->pose.y, msg->pose.z);
+  // RCLCPP_INFO(this->get_logger(), "I heard: '%f' '%f' '%f'", msg->orientation.x, msg->orientation.y, msg->orientation.z);
   ego_state.pose = msg->pose;
   ego_state.orientation = msg->orientation;
 }
