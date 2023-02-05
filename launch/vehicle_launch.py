@@ -20,10 +20,9 @@ def generate_launch_description():
     lidar_driver_node = LifecycleNode(package='ydlidar_ros2_driver',
                                       executable='ydlidar_ros2_driver_node',
                                       name='ydlidar_ros2_driver_node',
-                                      output='screen',
                                       emulate_tty=True,
                                       parameters=[parameter_file],
-                                      namespace='nandhi',
+                                      namespace='/',
                                       )
 
     tf2_node = Node(package='tf2_ros',
