@@ -18,4 +18,4 @@ sudo apt update && sudo apt install -y \
 sudo rosdep init
 rosdep update
 # Install ROS 2 workspace dependencies
-rosdep install -y --rosdistro "$ROS2_NAME" --from-paths .
+rosdep install -y --rosdistro "$ROS2_NAME" --from-paths . --ignore-src --rosdistro=${ROS2_NAME}
