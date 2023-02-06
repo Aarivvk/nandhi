@@ -20,7 +20,7 @@ jobs:
           ls ${{ github.workspace }}
 
       - name: Setup dependencies
-        run: bash ${{ github.action_path }}/setup/ros2-install.bash humble
+        run: bash ${{ github.workspace }}/.github/workflows/setup/ros2-install.bash humble
         shell: bash
       
       - name: Build workspace
