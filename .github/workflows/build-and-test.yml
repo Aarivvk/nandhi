@@ -20,8 +20,8 @@ jobs:
           ls ${{ github.workspace }}
 
       - name: Setup dependencies
-        run: zsh ${{ github.action_path }}/setup/ros2-install.zsh humble
-        shell: zsh
+        run: bash ${{ github.action_path }}/setup/ros2-install.bash humble
+        shell: bash
       
       - name: Build workspace
         run: python3 ./aadesh build all
