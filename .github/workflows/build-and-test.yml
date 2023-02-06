@@ -25,4 +25,4 @@ jobs:
       
       - name: Build workspace
         run: python3 ./aadesh build all
-        shell: zsh
+        shell: bash
