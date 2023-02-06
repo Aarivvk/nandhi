@@ -1,8 +1,15 @@
-name: GitHub Actions Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: Build Nadhi 
+run-name: ${{ github.actor }} is building out Nandhi 🚀
 on: [push]
+
+inputs:
+  ros2-distro:
+    description: 'The ROS 2 distribution to be used.'
+    required: false
+    default: 'humble'
+
 jobs:
-  Explore-GitHub-Actions:
+  Build:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -12,8 +19,10 @@ jobs:
         run: |
           ls ${{ github.workspace }}
 
-      - name: Build and test workspace
-        run: rosdep update
-        uses: ichiro-its/ros2-build-and-test-action@main
-        with:
-         ros2-distro: humble
+      - name: Setup dependencies
+        run: zsh ${{ github.action_path }}/setup/ros2-install.zsh ${{ inputs.ros2-distro }}
+        shell: zsh
+      
+      - name: Build workspace
+        run: python3 ./aadesh build all
+        shell: zsh
