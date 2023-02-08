@@ -24,6 +24,5 @@ jobs:
         shell: bash
       
       - name: Build workspace
-        run: source /opt/ros/rolling/setup.bash
-        run: python3 aadesh.py build all
+        run: source /opt/ros/rolling/setup.bash && python3 aadesh.py build all
         shell: bash
