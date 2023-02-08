@@ -14,7 +14,7 @@ sudo apt update && sudo apt install -y \
   python3-pytest-cov \
   ros-dev-tools
 
-sudo apt install -y libi2c-dev
+sudo apt install -y libi2c-dev libopencv-dev
 
 # Initialize rosdep
 sudo rosdep init

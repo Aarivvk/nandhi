@@ -6,7 +6,7 @@ import os
 import sys
 
 build_cmd = "colcon build --symlink-install"
-
+bulid_status=0
 os.system("/opt/ros/rolling/setup.zsh")
 
 MAIN_OPS = {"build": "builds the packages for you",
@@ -22,10 +22,10 @@ def print_oops(ops):
 
 def build(sub_cmd, packages):
     if (sub_cmd == list(BUILD_OPS.keys())[0]):
-        res = os.system(build_cmd)
+        bulid_status = os.system(build_cmd)
 
     elif (sub_cmd == list(BUILD_OPS.keys())[1]):
-        res = os.system(build_cmd + " --packages-up-to" + packages)
+        bulid_status = os.system(build_cmd + " --packages-up-to" + packages)
     else:
         print("Invalid command\noptions are:")
         print_oops(BUILD_OPS)
@@ -53,7 +53,7 @@ def run_option():
     elif cmd == list(MAIN_OPS.keys())[1]:
         install_driver()
     elif cmd == list(MAIN_OPS.keys())[2]:
-        res = os.system("rm -rf build install log")
+        bulid_status = os.system("rm -rf build install log")
         print("Deleted the build artifacts")
     else:
         print("Invalid command\noptions are:")
@@ -64,6 +64,7 @@ def main():
     print("Ambhaaa!")
 
     run_option()
+    exit(bulid_status)
 
 
 if __name__ == "__main__":
