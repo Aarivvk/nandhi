@@ -64,7 +64,7 @@ def main():
     print("Ambhaaa!")
 
     run_option()
-    print("The build return vaule " + bulid_status)
+    print("The build return vaule " + str(bulid_status))
     exit(bulid_status)
 
 
