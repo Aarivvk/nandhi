@@ -1,6 +1,14 @@
 name: Build Nadhi 
 run-name: ${{ github.actor }} is building out Nandhi 🚀
-on: [push, pull_request]
+on: [pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - `*`
+
 
 # inputs:
 #   ros2-distro:
