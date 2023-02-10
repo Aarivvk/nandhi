@@ -13,7 +13,6 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 find_package(ament_cmake REQUIRED)
-find_library(i2c REQUIRED)
 
 set(SRCS "src/i2c.cc")
 add_library(${PROJECT_NAME} STATIC ${SRCS})

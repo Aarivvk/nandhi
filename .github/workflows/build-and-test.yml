@@ -1,12 +1,12 @@
 name: Build Nadhi 
 run-name: ${{ github.actor }} is building out Nandhi 🚀
-on: [push]
+on: [push, pull_request]
 
-inputs:
-  ros2-distro:
-    description: 'The ROS 2 distribution to be used.'
-    required: false
-    default: 'humble'
+# inputs:
+#   ros2-distro:
+#     description: 'The ROS 2 distribution to be used.'
+#     required: false
+#     default: 'humble'
 
 jobs:
   Build:
@@ -20,9 +20,9 @@ jobs:
           ls ${{ github.workspace }}
 
       - name: Setup dependencies
-        run: zsh ${{ github.action_path }}/setup/ros2-install.zsh ${{ inputs.ros2-distro }}
-        shell: zsh
+        run: bash ${{ github.workspace }}/.github/workflows/setup/ros2-install.bash rolling
+        shell: bash
       
       - name: Build workspace
-        run: python3 ./aadesh build all
-        shell: zsh
+        run: source /opt/ros/rolling/setup.bash && python3 aadesh.py build all
+        shell: bash
