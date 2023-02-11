@@ -1,5 +1,5 @@
 name: Build Nadhi 
-run-name: ${{ github.actor }} is building out Nandhi 🚀
+run-name: ${{ github.actor }} is building 🚀 out Nandhi 🐮
 
 on: [pull_request]
 
