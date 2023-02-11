@@ -9,6 +9,7 @@ on:
 env:
   IMAGE_NAME: ros2_dev
   TAG_NAME: latest
+  REPOSITORY: nandhi
 
 jobs:
   build_and_push:
@@ -31,4 +32,4 @@ jobs:
         context: ./docker
         file: ./docker/Dockerfile
         push: true
-        tags: ghcr.io/${{ env.GITHUB_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
+        tags: ghcr.io/${{ env.REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
