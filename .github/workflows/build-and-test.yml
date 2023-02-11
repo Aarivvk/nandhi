@@ -1,8 +1,11 @@
-name: Build Nadhi 
+name: Build Nadhi
 run-name: ${{ github.actor }} is building 🚀 out Nandhi 🐮
 
-on: [pull_request]
-
+on:
+  pull_request:
+    branches: ["main"]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 # inputs:
 #   ros2-distro:
@@ -15,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
+        with:
+          submodules: recursive
         uses: actions/checkout@v3
 
       - name: List files in the repository
@@ -24,7 +29,7 @@ jobs:
       - name: Setup dependencies
         run: bash ${{ github.workspace }}/.github/workflows/setup/ros2-install.bash rolling
         shell: bash
-      
+
       - name: Build workspace
         run: source /opt/ros/rolling/setup.bash && python3 aadesh.py build all
         shell: bash

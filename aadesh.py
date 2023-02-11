@@ -13,7 +13,8 @@ MAIN_OPS = {"build": "builds the packages for you",
             "install": "install the preriqisit drivers",
             "clean": "Clean the install build and log folder"}
 BUILD_OPS = {"all":"builds all the packages",
-             "package": "builds selected packages"}
+             "package": "builds selected packages",
+             "pc": "only build observer/viz packages"}
 
 def print_oops(ops):
     for key, value in ops.items():
@@ -26,6 +27,7 @@ def build(sub_cmd, packages):
 
     elif (sub_cmd == list(BUILD_OPS.keys())[1]):
         bulid_status = os.system(build_cmd + " --packages-up-to" + packages)
+        #TODO: Add pc and nandhi case.
     else:
         print("Invalid command\noptions are:")
         print_oops(BUILD_OPS)
