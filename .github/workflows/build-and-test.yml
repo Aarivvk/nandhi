@@ -1,10 +1,10 @@
-name: Build Nadhi 
+name: Build Nadhi
 run-name: ${{ github.actor }} is building 🚀 out Nandhi 🐮
 
 on: [pull_request]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+# Allows you to run this workflow manually from the Actions tab
+workflow_dispatch:
 
 # inputs:
 #   ros2-distro:
@@ -26,7 +26,7 @@ jobs:
       - name: Setup dependencies
         run: bash ${{ github.workspace }}/.github/workflows/setup/ros2-install.bash rolling
         shell: bash
-      
+
       - name: submodule update
         run: git submodule update --init
 
