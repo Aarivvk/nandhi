@@ -1,10 +1,11 @@
 name: Build Nadhi
 run-name: ${{ github.actor }} is building 🚀 out Nandhi 🐮
 
-on: [pull_request]
-
-# Allows you to run this workflow manually from the Actions tab
-workflow_dispatch:
+on:
+  pull_request:
+    branches: ["main"]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 # inputs:
 #   ros2-distro:
