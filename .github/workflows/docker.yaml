@@ -1,0 +1,32 @@
+name: ROS 2 CI/CD
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  TAG_NAME: latest
+  ROS_CODE_DIR: .
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: ./docker
+        push: true
+        tags: my_ros2_image:${{ env.TAG_NAME }}
+
+    - name: Test ROS 2 project
+      uses: docker://my_ros2_image:${{ env.TAG_NAME }}
+      with:
+        entrypoint: ["./ci_cd_action.sh"]
+      volume:
+        - ${{ env.ROS_CODE_DIR }}:/ros2_ws
