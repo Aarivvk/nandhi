@@ -6,8 +6,8 @@ on:
       - main
 
 env:
-  TAG_NAME: latest
-  ROS_CODE_DIR: .
+  TAG_NAME: ${{ env.GITHUB_SHA }}
+  ROS_CODE_DIR: ${{ env.ROS_CODE_DIR }}
 
 jobs:
   build:
@@ -16,11 +16,13 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+      env:
+        ROS_CODE_DIR: ${{ env.ROS_CODE_DIR }}
 
     - name: Build Docker image
       uses: docker/build-push-action@v2
       with:
-        context: ./docker
+        context: .
         push: true
         tags: my_ros2_image:${{ env.TAG_NAME }}
 
@@ -28,5 +30,7 @@ jobs:
       uses: docker://my_ros2_image:${{ env.TAG_NAME }}
       with:
         entrypoint: ["./ci_cd_action.sh"]
-      volume:
+      env:
+        ROS_CODE_DIR: ${{ env.ROS_CODE_DIR }}
+      volumes:
         - ${{ env.ROS_CODE_DIR }}:/ros2_ws
