@@ -24,6 +24,6 @@ jobs:
     - name: Test ROS 2 project
       uses: docker://my_ros2_image:latest
       with:
-        entrypoint: ["./ci_cd_action.sh"]
+        entrypoint: ./ci_cd_action.sh
         volumes:
           - .:/ros2_ws
