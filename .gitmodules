@@ -3,4 +3,4 @@
 	url = git@github.com:YDLIDAR/YDLidar-SDK.git
 [submodule "drivers/ydlidar_ros2_driver"]
 	path = drivers/ydlidar_ros2_driver
-	url = git@github.com:YDLIDAR/ydlidar_ros2_driver.git
+	url = git@github.com:chenjunnn/ydlidar_ros2_driver.git
