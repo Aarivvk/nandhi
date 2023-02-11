@@ -1,14 +1,14 @@
 name: ROS 2 CI/CD
 
+env:
+  TAG_NAME: latest
+  ROS_CODE_DIR: .
+
 on:
   pull_request:
     branches:
       - main
   workflow_dispatch:
-
-env:
-  TAG_NAME: ${{ env.GITHUB_SHA }}
-  ROS_CODE_DIR: ${{ env.ROS_CODE_DIR }}
 
 jobs:
   build:
