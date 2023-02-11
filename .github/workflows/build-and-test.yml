@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
+        with:
+          submodules: recursive
         uses: actions/checkout@v3
 
       - name: List files in the repository
@@ -27,9 +29,6 @@ jobs:
       - name: Setup dependencies
         run: bash ${{ github.workspace }}/.github/workflows/setup/ros2-install.bash rolling
         shell: bash
-
-      - name: submodule update
-        run: git submodule update --init
 
       - name: Build workspace
         run: source /opt/ros/rolling/setup.bash && python3 aadesh.py build all
