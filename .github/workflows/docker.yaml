@@ -25,5 +25,4 @@ jobs:
       uses: docker://my_ros2_image:latest
       with:
         entrypoint: ./ci_cd_action.sh
-        volumes:
-          - .:/ros2_ws
+        volumes: .:/ros2_ws
