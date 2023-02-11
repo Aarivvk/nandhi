@@ -1,5 +1,5 @@
 # Use the latest ROS 2 base image
-FROM osrf/ros2:eloquent-ros2cli-ubuntu-bionic
+FROM osrf/ros2:devel
 
 # Install OpenCV
 RUN apt-get update && apt-get install -y \
