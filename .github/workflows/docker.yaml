@@ -1,4 +1,4 @@
-name: ROS 2 CI/CD
+name: Build and Push Docker Image
 
 on:
   pull_request:
@@ -6,8 +6,11 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  IMAGE_NAME: ros2_dev
+
 jobs:
-  build:
+  build_and_push:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,10 +22,14 @@ jobs:
       with:
         context: .
         push: true
-        tags: my_ros2_image:latest
+        tags: docker.pkg.github.com/${{ env.GITHUB_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
 
-    - name: Test ROS 2 project
-      uses: docker://my_ros2_image:latest
+    - name: Login to Github Docker Registry
+      uses: docker/login-action@v1
       with:
-        entrypoint: ./ci_cd_action.sh
-        volumes: .:/ros2_ws
+        registry: docker.pkg.github.com
+
+    - name: Push Docker image
+      uses: docker/push-action@v1
+      with:
+        tags: docker.pkg.github.com/${{ env.GITHUB_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ env.TAG_NAME }}
