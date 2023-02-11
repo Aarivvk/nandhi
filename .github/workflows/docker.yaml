@@ -8,6 +8,7 @@ on:
 
 env:
   IMAGE_NAME: ros2_dev
+  TAG_NAME: latest
 
 jobs:
   build_and_push:
