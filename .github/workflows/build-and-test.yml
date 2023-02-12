@@ -16,6 +16,15 @@ on:
 jobs:
   Build:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.actor }}/${{ github.repository }}:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+      volumes:  ${{ github.workspace }}:~/ros2_ws/src
+      env:
+        ROS_WPS: ~/ros2_ws
+
     steps:
       - name: Check out repository code
         with:
@@ -24,12 +33,4 @@ jobs:
 
       - name: List files in the repository
         run: |
-          ls ${{ github.workspace }}
-
-      - name: Setup dependencies
-        run: bash ${{ github.workspace }}/.github/workflows/setup/ros2-install.bash rolling
-        shell: bash
-
-      - name: Build workspace
-        run: source /opt/ros/rolling/setup.bash && python3 aadesh.py build all
-        shell: bash
+          ls $ROS_WPS
