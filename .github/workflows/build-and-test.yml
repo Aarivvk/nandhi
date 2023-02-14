@@ -17,7 +17,7 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/${{ github.actor }}/${{ github.repository }}:latest
+      image: ghcr.io/aarivvk/nandhi:latest
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -26,6 +26,12 @@ jobs:
         ROS_WPS: ~/ros2_ws
 
     steps:
+      - name: set lower case owner name
+        env:
+          OWNER: '${{ github.repository_owner }}'
+        run: |
+          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
+
       - name: Check out repository code
         with:
           submodules: recursive
