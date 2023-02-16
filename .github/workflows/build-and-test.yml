@@ -21,7 +21,7 @@ jobs:
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-      volumes:  ${{ github.workspace }}:~/ros2_ws/src
+      volumes: ${{ github.workspace }}:/ros2_ws/src
 
     steps:
       - name: Check out repository code
