@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: List files in the repository
-        run: ls /opt/ros && pwd
+        run: docker exec -it bash -c "ls /opt/ros && pwd"
 
       - name: Build Nanhi
         run: ./aadesh.py build all
