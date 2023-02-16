@@ -12,13 +12,19 @@ name: Create and publish a Docker image
 on:
   workflow_dispatch:
   push:
-    branches:
-      - 'master'
+    branches: ["master"]
     tags:
       - 'v*'
+    paths:
+      - '**Dockerfile'
   pull_request:
-    branches:
-      - 'master'
+    branches: ["master"]
+    paths:
+      - '**Dockerfile'
+
+concurrency:
+  group: ${{format('{0}:{1}', github.repository, github.ref)}}
+  cancel-in-progress: true
 
 env:
   REGISTRY: ghcr.io

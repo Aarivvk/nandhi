@@ -21,7 +21,7 @@ jobs:
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-      # volumes:  ${{ github.workspace }}:$HOME/ros2_ws/src
+      volumes:  ${{ github.workspace }}:~/ros2_ws/src
 
     steps:
       - name: Check out repository code
@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: List files in the repository
-        run: ls && pwd
+        run: nandhi ls && pwd
 
       - name: Build Nanhi
         run: ./aadesh.py build all
