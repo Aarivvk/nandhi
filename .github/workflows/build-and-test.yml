@@ -33,4 +33,4 @@ jobs:
         run: ls && pwd
 
       - name: Build Nanhi
-        run: ./aadesh build all
+        run: ./aadesh.py build all
