@@ -22,8 +22,6 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
       # volumes:  ${{ github.workspace }}:$HOME/ros2_ws/src
-      env:
-        ROS_WPS: ~/ros2_ws
 
     steps:
       - name: Check out repository code
@@ -32,4 +30,4 @@ jobs:
         uses: actions/checkout@v3
 
       - name: List files in the repository
-        run: ls $ROS_WPS && pwd
+        run: ls ~/ros2_ws && pwd
