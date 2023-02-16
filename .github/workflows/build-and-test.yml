@@ -26,12 +26,6 @@ jobs:
         ROS_WPS: ~/ros2_ws
 
     steps:
-      - name: set lower case owner name
-        env:
-          OWNER: '${{ github.repository_owner }}'
-        run: |
-          echo "OWNER_LC=${OWNER,,}" >>${GITHUB_ENV}
-
       - name: Check out repository code
         with:
           submodules: recursive
