@@ -16,6 +16,13 @@ on:
 jobs:
   Build:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/aarivvk/nandhi:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+      # volumes:  ${{ github.workspace }}:$HOME/ros2_ws/src
+
     steps:
       - name: Check out repository code
         with:
@@ -23,13 +30,4 @@ jobs:
         uses: actions/checkout@v3
 
       - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-
-      - name: Setup dependencies
-        run: bash ${{ github.workspace }}/.github/workflows/setup/ros2-install.bash rolling
-        shell: bash
-
-      - name: Build workspace
-        run: source /opt/ros/rolling/setup.bash && python3 aadesh.py build all
-        shell: bash
+        run: ls && pwd
