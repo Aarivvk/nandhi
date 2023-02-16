@@ -25,8 +25,8 @@ RUN mkdir -p ~/ros2_ws/src
 # Set the default working directory
 WORKDIR ~/ros2_ws
 
-# Copy the CI/CD action files
-COPY . .
+# # Copy the CI/CD action files
+# COPY . .
 
-# Set the entrypoint to the CI/CD script
-ENTRYPOINT ["./ci_cd_action.sh"]
+# # Set the entrypoint to the CI/CD script
+# ENTRYPOINT ["./ci_cd_action.sh"]
