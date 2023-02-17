@@ -35,7 +35,8 @@ jobs:
         run: ls /opt/ros && echo $SHELL
 
       - name: Build Nanhi
-        run: . ./opt/ros/rolling/setup.bash
-        run: cd /nandhi
-        run: ./aadesh install
-        run: ./aadesh.py build all
+        run: |
+           . ./opt/ros/rolling/setup.bash
+           cd /nandhi
+           ./aadesh install
+           ./aadesh.py build all
