@@ -35,4 +35,4 @@ jobs:
         run: which uname
 
       - name: Build Nanhi
-        run: ls /ros2_ws/src
+        run: ls src
