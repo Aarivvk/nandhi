@@ -34,6 +34,7 @@ jobs:
       - name: Build Nanhi
         run: |
            cd /nandhi
+           ls
            ./aadesh install
            ./aadesh.py build all
       - name: Check for Ros2 instalation
