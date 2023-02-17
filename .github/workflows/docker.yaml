@@ -19,7 +19,7 @@ on:
   pull_request:
     branches: ["main"]
     path:
-      - '**Dockefile'
+      - '**Dockerfile'
     tags:
       - 'v*'
 
