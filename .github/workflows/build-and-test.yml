@@ -11,7 +11,7 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/aarivvk/nandhi:pr-19
+      image: ghcr.io/aarivvk/nandhi:main
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
