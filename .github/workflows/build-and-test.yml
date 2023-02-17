@@ -33,7 +33,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Check for Ros2 instalation
-        run: which uname
+        run: ls /opt/ros
 
       - name: Build Nanhi
-        run: ls src
+        run: |
+            cd /ros2_ws
+            ./src/aadesh.py build all
