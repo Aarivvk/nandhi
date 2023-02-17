@@ -36,6 +36,6 @@ jobs:
            cd /nandhi
            ls
            ls /opt/ros/rolling
-           source /opt/ros/rolling/setup.bash
+           . /opt/ros/rolling/setup.bash
            ./aadesh.py install
            ./aadesh.py build all
