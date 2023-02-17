@@ -23,7 +23,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
       volumes:
-        - ${{ github.workspace }}/:/ros2_ws/src
+        - ${{ github.workspace }}/:/nandhi
 
     steps:
       - name: Check out repository code
@@ -36,5 +36,5 @@ jobs:
 
       - name: Build Nanhi
         run: |
-            cd /ros2_ws
-            ./src/aadesh.py build all
+            cd /nandhi
+            ./aadesh.py build all
