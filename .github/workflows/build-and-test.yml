@@ -35,4 +35,4 @@ jobs:
         run: which uname
 
       - name: Build Nanhi
-        run: /usr/bin/docker exec nandhi:latest sh -c "./aadesh.py build all"
+        run: ./aadesh.py build all

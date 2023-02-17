@@ -12,13 +12,15 @@ name: Create and publish a Docker image
 on:
   workflow_dispatch:
   push:
+    paths:
+      - '**Dockerfile'
     branches: ["main"]
     tags:
       - 'v*'
 
   pull_request:
     branches: ["main"]
-    path:
+    paths:
       - '**Dockerfile'
     tags:
       - 'v*'
