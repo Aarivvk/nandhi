@@ -21,7 +21,8 @@ jobs:
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-      # volumes: ${{ github.workspace }}:/ros2_ws/src
+      volumes:
+        - ${{ github.workspace }}/:~/ros2_ws/src
 
     steps:
       - name: Check out repository code
@@ -29,8 +30,8 @@ jobs:
           submodules: recursive
         uses: actions/checkout@v3
 
-      - name: List files in the repository
-        run: docker exec -it bash -c "ls /opt/ros && pwd"
+      - name: Check for Ros2 instalation
+        run: ls /opt/ros && pwd
 
       - name: Build Nanhi
         run: ./aadesh.py build all

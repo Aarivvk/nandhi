@@ -39,16 +39,16 @@ SHELL ["/bin/bash", "-c"]
 RUN echo "source /opt/ros/rolling/setup.bash" >> ~/.bashrc
 
 # Create a workspace for your ROS 2 projects
-# RUN mkdir -p ~/ros2_ws/src
+RUN mkdir -p ~/ros2_ws/src
 
-# # Set the default working directory
-# WORKDIR ~/ros2_ws
+# Set the default working directory
+WORKDIR ~/ros2_ws
 
 # # Copy the CI/CD action files
 # COPY . .
 
-# # Set the entrypoint to the CI/CD script
-# ENTRYPOINT ["./ci_cd_action.sh"]
-
 
 RUN rm -rf /var/lib/apt/lists/*
+
+# Set the entrypoint to the CI/CD script
+# ENTRYPOINT [/usr/bin/bash]

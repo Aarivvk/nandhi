@@ -19,6 +19,8 @@ on:
       - '**Dockerfile'
   pull_request:
     branches: ["master"]
+    tags:
+      - 'v*'
     paths:
       - '**Dockerfile'
 
