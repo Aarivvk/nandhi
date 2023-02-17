@@ -17,7 +17,7 @@ on:
       - 'v*'
 
   pull_request:
-    branches: ["master"]
+    branches: ["*"]
     tags:
       - 'v*'
 
