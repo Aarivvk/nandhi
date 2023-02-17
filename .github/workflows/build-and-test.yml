@@ -24,6 +24,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
       volumes:
         - ${{ github.workspace }}/:/ros2_ws/src
+      options: --workdir /ros2_ws
 
     steps:
       - name: Check out repository code
