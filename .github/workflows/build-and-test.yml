@@ -33,7 +33,6 @@ jobs:
 
       - name: Build Nanhi
         run: |
-           . ./opt/ros/rolling/setup.bash
            cd /nandhi
            ./aadesh install
            ./aadesh.py build all
