@@ -15,14 +15,11 @@ on:
     branches: ["master"]
     tags:
       - 'v*'
-    paths:
-      - '**Dockerfile'
+
   pull_request:
     branches: ["master"]
     tags:
       - 'v*'
-    paths:
-      - '**Dockerfile'
 
 concurrency:
   group: ${{format('{0}:{1}', github.repository, github.ref)}}
