@@ -7,18 +7,11 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# inputs:
-#   ros2-distro:
-#     description: 'The ROS 2 distribution to be used.'
-#     required: false
-#     default: 'humble'
-
 jobs:
   Build:
     runs-on: ubuntu-latest
-    # needs: Build-and-push-Docker-image
     container:
-      image: ghcr.io/aarivvk/nandhi:pr-19
+      image: ghcr.io/aarivvk/nandhi:main
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
@@ -34,8 +27,6 @@ jobs:
       - name: Build Nanhi
         run: |
            cd /nandhi
-           ls
-           ls /opt/ros/rolling
            . /opt/ros/rolling/setup.sh
            ./aadesh.py install
            ./aadesh.py build all
