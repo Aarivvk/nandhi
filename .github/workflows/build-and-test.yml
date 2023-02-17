@@ -31,12 +31,11 @@ jobs:
           submodules: recursive
         uses: actions/checkout@v3
 
-      - name: Check for Ros2 instalation
-        run: ls /opt/ros && echo $SHELL
-
       - name: Build Nanhi
         run: |
            . ./opt/ros/rolling/setup.bash
            cd /nandhi
            ./aadesh install
            ./aadesh.py build all
+      - name: Check for Ros2 instalation
+        run: ls /opt/ros && echo $SHELL
