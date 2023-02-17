@@ -26,12 +26,6 @@ jobs:
         - ${{ github.workspace }}/:/ros2_ws/src
 
     steps:
-      - name: Wait on check
-        uses: lewagon/wait-on-check-action@v1.3.1
-        with:
-          ref: ${{ github.ref }}
-          check-name: 'Build and push Docker image'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Check out repository code
         with:
           submodules: recursive
