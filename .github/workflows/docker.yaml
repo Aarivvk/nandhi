@@ -18,6 +18,8 @@ on:
 
   pull_request:
     branches: ["main"]
+    path:
+      - '**Dockefile'
     tags:
       - 'v*'
 

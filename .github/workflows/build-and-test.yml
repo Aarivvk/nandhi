@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Check for Ros2 instalation
-        run: which docker
+        run: which uname
 
       - name: Build Nanhi
         run: /usr/bin/docker exec nandhi:latest sh -c "./aadesh.py build all"
