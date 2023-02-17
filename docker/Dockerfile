@@ -45,10 +45,10 @@ RUN mkdir -p /ros2_ws/src
 WORKDIR /ros2_ws
 
 # # Copy the CI/CD action files
-COPY . .
+# COPY . .
 
 
 RUN rm -rf /var/lib/apt/lists/*
 
 # Set the entrypoint to the CI/CD script
-ENTRYPOINT ["./ci_cd_action.sh"]
+# ENTRYPOINT ["./ci_cd_action.sh"]
