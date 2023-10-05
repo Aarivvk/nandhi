@@ -1,0 +1,11 @@
+{
+    // "image": "ghcr.io/aarivvk/nandhi:main",
+    "build": { "dockerfile": "../docker/Dockerfile" },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "streetsidesoftware.code-spell-checker", "ms-python.python", "ms-azuretools.vscode-docker"
+            ]
+        }
+    }
+}
