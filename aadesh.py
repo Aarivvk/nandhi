@@ -7,10 +7,10 @@ import sys
 
 build_cmd = "colcon build --symlink-install"
 bulid_status=0
-os.system("/opt/ros/rolling/setup.zsh")
+os.system("/opt/ros/rolling/setup.sh")
 
 MAIN_OPS = {"build": "builds the packages for you",
-            "install": "install the preriqisit drivers",
+            "install": "install the prerequisite drivers",
             "clean": "Clean the install build and log folder"}
 BUILD_OPS = {"all":"builds all the packages",
              "package": "builds selected packages",

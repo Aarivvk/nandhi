@@ -1,9 +1,9 @@
 # Use the latest ROS 2 base image
-FROM ubuntu:22.04
+FROM nvcr.io/nvidia/pytorch:23.09-py3
 
 
 # Install OpenCV && I2C library support
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends\
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     libopencv-dev \
     python3-opencv \
     i2c-tools \
