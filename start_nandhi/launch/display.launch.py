@@ -9,7 +9,7 @@ from ament_index_python.packages import get_package_share_path
 
 def generate_launch_description():
     share_dir = get_package_share_directory('config')
-    urdf_path = path.join(share_dir, 'urdf', 'nandhi.urdf')
+    urdf_path = path.join(share_dir, 'urdf', 'nandhi.urdf.xacro')
     robot_description = ParameterValue(Command(['xacro ', urdf_path]), value_type=str)
 
     robot_state_publisher_node = Node(
