@@ -5,6 +5,9 @@ from launch.substitutions import Command
 from launch_ros.actions import Node
 from os import path
 from ament_index_python.packages import get_package_share_path
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
+from launch.actions import IncludeLaunchDescription
 
 
 def generate_launch_description():
@@ -40,8 +43,29 @@ def generate_launch_description():
                       arguments=['-d', rviz_config_file],
                       )
 
+
+    # Setup to launch the simulator and Gazebo world
+    pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
+    gz_sim = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
+    )
+
+    # Bridge ROS topics and Gazebo messages for establishing communication
+    bridge = Node(
+        package='ros_gz_bridge',
+        executable='parameter_bridge',
+        parameters=[{
+            'config_file': path.join(share_dir, 'gz', 'bridge.yaml'),
+            'qos_overrides./tf_static.publisher.durability': 'transient_local',
+        }],
+        output='screen'
+    )
+
     return LaunchDescription([
         robot_state_publisher_node,
         joint_state_publisher,
-        rviz2_node
+        rviz2_node,
+        gz_sim,
+        bridge
     ])
