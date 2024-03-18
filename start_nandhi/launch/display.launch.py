@@ -50,6 +50,18 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
     )
+    
+    # spawn a model from urdf in gazebo
+    gz_sim_creat = Node(
+        package='ros_gz_sim',
+        executable='create',
+        arguments=[
+            '-world', 'default',
+            '-file', path.join(share_dir, 'urdf', 'nandhi.urdf'),
+        ],
+        output='screen'
+    )
+    
 
     # Bridge ROS topics and Gazebo messages for establishing communication
     bridge = Node(
@@ -67,5 +79,6 @@ def generate_launch_description():
         joint_state_publisher,
         rviz2_node,
         gz_sim,
-        bridge
+        bridge,
+        gz_sim_creat,
     ])
