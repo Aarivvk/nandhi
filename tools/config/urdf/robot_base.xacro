@@ -68,13 +68,6 @@
         <axis xyz="0 1 0" />
     </joint>
 
-    <joint name="base_front_left_wheel_steer_joint" type="continuous">
-        <parent link="base_link" />
-        <child link="front_left_wheel_link" />
-        <origin xyz="-${wheel_link_pose} -${wheel_link_pose} ${base_height / 2}" rpy="0 0 0" />
-        <axis xyz="0 0 1" />
-    </joint>
-
     <joint name="base_front_right_wheel_joint" type="continuous">
         <parent link="base_link" />
         <child link="front_right_wheel_link" />
@@ -82,12 +75,6 @@
         <axis xyz="0 1 0" />
     </joint>
 
-    <joint name="base_front_right_wheel_steer_joint" type="continuous">
-        <parent link="base_link" />
-        <child link="front_right_wheel_link" />
-        <origin xyz="-${wheel_link_pose} ${wheel_link_pose} ${base_height / 2}" rpy="0 0 0" />
-        <axis xyz="0 0 1" />
-    </joint>
 
     <joint name="base_rear_left_wheel_joint" type="continuous">
         <parent link="base_link" />
