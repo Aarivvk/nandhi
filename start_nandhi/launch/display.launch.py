@@ -13,8 +13,9 @@ from launch.actions import IncludeLaunchDescription
 def generate_launch_description():
     share_dir = get_package_share_directory('config')
     urdf_path = path.join(share_dir, 'urdf', 'nandhi.urdf.xacro')
-    robot_description = ParameterValue(Command(['xacro ', urdf_path]), value_type=str)
-
+    string_rd = Command(['xacro ', urdf_path])
+    robot_description = ParameterValue(string_rd, value_type=str)
+    
     robot_state_publisher_node = Node(
         package='robot_state_publisher',
         namespace='/',
@@ -57,7 +58,7 @@ def generate_launch_description():
         executable='create',
         arguments=[
             '-world', 'default',
-            '-file', path.join(share_dir, 'urdf', 'nandhi.urdf'),
+            '-string', string_rd,
         ],
         output='screen'
     )
