@@ -50,17 +50,11 @@ def generate_launch_description():
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
-    )
-    
-    # spawn a model from urdf in gazebo
-    gz_sim_creat = Node(
-        package='ros_gz_sim',
-        executable='create',
-        arguments=[
-            '-world', 'default',
-            '-string', string_rd,
-        ],
-        output='screen'
+            launch_arguments={'gz_args': PathJoinSubstitution([
+            share_dir,
+            'worlds',
+            'racecar.world'
+        ])}.items(),
     )
     
 
@@ -75,11 +69,21 @@ def generate_launch_description():
         output='screen'
     )
 
+    # spawn a model from urdf in gazebo
+    gz_sim_creat = Node(
+        package='ros_gz_sim',
+        executable='create',
+        arguments=[
+            '-topic', '/robot_description',
+        ],
+        output='screen'
+    )
+
     return LaunchDescription([
+        gz_sim,
         robot_state_publisher_node,
         joint_state_publisher,
         rviz2_node,
-        gz_sim,
         bridge,
         gz_sim_creat,
     ])

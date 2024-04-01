@@ -9,10 +9,6 @@
         <color rgba="0 0 1 1" />
     </material>
 
-    <material name="green">
-        <color rgba="0.0 0.8 0.0 1.0" />
-    </material>
-
     <material name="grey">
         <color rgba="0.2 0.2 0.2 1.0" />
     </material>
@@ -36,7 +32,7 @@
 
     <xacro:macro name="box_inertia" params="m l w h xyz rpy">
         <inertial>
-            <origin xyz="${xyz}" rpy="${rpy}" />
+            <origin rpy="${rpy}" xyz="${xyz}"/>
             <mass value="${m}" />
             <inertia ixx="${(m/12) * (h*h + l*l)}" ixy="0" ixz="0"
                 iyy="${(m/12) * (w*w + l*l)}" iyz="0"
@@ -46,7 +42,7 @@
 
     <xacro:macro name="cylinder_inertia" params="m r l xyz rpy">
         <inertial>
-            <origin xyz="${xyz}" rpy="${rpy}" />
+            <origin rpy="${rpy}" xyz="${xyz}"/>
             <mass value="${m}" />
             <inertia ixx="${(m/12) * (3*r*r + l*l)}" ixy="0" ixz="0"
                 iyy="${(m/12) * (3*r*r + l*l)}" iyz="0"
