@@ -7,7 +7,7 @@ find_package(ament_cmake REQUIRED)
 
 add_library(${PROJECT_NAME} INTERFACE)
 
-install(DIRECTORY lidar rviz urdf gz
+install(DIRECTORY lidar rviz urdf gz worlds
     DESTINATION share/${PROJECT_NAME})
 
 ament_package()
