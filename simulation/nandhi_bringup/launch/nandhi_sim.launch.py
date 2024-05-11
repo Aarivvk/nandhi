@@ -73,9 +73,9 @@ def generate_launch_description():
 
     return LaunchDescription([
         gz_sim,
-        #DeclareLaunchArgument('rviz', default_value='true',
-         #                     description='Open RViz.'),
-        #bridge,
-        #robot_state_publisher,
-        #rviz
+        DeclareLaunchArgument('rviz', default_value='true',
+                             description='Open RViz.'),
+        bridge,
+        robot_state_publisher,
+        rviz
     ])
