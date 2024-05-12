@@ -22,7 +22,7 @@ def generate_launch_description():
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
     # Load the SDF file from "description" package
-    sdf_file  =  os.path.join(pkg_project_description, 'models', 'diff_drive', 'model.sdf')
+    sdf_file  =  os.path.join(pkg_project_description, 'models', 'nandhi', 'model.sdf')
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
 
@@ -33,7 +33,7 @@ def generate_launch_description():
         launch_arguments={'gz_args': PathJoinSubstitution([
             pkg_project_gazebo,
             'worlds',
-            'ackermann_steering.sdf'
+            'indoor.sdf'
         ])}.items(),
     )
 
@@ -47,6 +47,16 @@ def generate_launch_description():
             {'use_sim_time': True},
             {'robot_description': robot_desc},
         ]
+    )
+    
+    # For publishing and controlling the robot pose, we need joint states of the robot
+    # Configure the robot model by adjusting the joint angles using the GUI slider
+    joint_state_publisher_gui = Node(
+        package='joint_state_publisher_gui',
+        executable='joint_state_publisher_gui',
+        name='joint_state_publisher_gui',
+        arguments=[sdf_file],
+        output=['screen']
     )
 
     # Visualize in RViz
@@ -77,5 +87,6 @@ def generate_launch_description():
                              description='Open RViz.'),
         bridge,
         robot_state_publisher,
+        joint_state_publisher_gui,
         rviz
     ])
