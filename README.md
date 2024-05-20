@@ -51,3 +51,9 @@ I am aproching this task in below Phases fasion.
 
 ## Launch Nandhi
 
+To launch simulation
+
+```bash
+source install/setup.bash
+ros2 launch nandhi_sim_launch nandhi_sim.launch.py
+```
