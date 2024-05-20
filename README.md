@@ -24,7 +24,15 @@ I am aproching this task in below Phases fasion.
 - Monitor the power consumsion
 - Reposrt batery status and abnormalities
 
-#### Phase II: (Software)
+#### Phase II: (Simulation)
+1. Gazebo simulation
+2. 4wd ackerman steering
+3. Lidar
+4. camera
+5. Ros bridge
+6. RVIZ
+
+#### Phase III: (Software)
 
 1. Basic Vehicle drivers ROS2 nodes
 
