@@ -20,8 +20,8 @@
     </plugin>
 
     <plugin
-      filename="libignition-gazebo-sensors-system.so"
-      name="ignition::gazebo::systems::Sensors">
+      filename="gz-sim-sensors-system"
+      name="gz::sim::systems::Sensors">
       <render_engine>ogre2</render_engine>
     </plugin>
 
@@ -105,7 +105,6 @@
         <max_velocity>100</max_velocity>
         <min_acceleration>-5</min_acceleration>
         <max_acceleration>5</max_acceleration>
-        <topic>/nandhi/cmd_vel</topic>
       </plugin>
 
       <!-- Moving Forward-->
@@ -114,7 +113,7 @@
         <input type="ignition.msgs.Int32" topic="/keyboard/keypress">
           <match field="data">16777235</match>
         </input>
-        <output type="ignition.msgs.Twist" topic="/nandhi/cmd_vel">
+        <output type="ignition.msgs.Twist" topic="/model/nandhi/cmd_vel">
           linear: {x: 0.5}, angular: {z: 0.0}
         </output>
       </plugin>
@@ -124,7 +123,7 @@
         <input type="ignition.msgs.Int32" topic="/keyboard/keypress">
           <match field="data">16777237</match>
         </input>
-        <output type="ignition.msgs.Twist" topic="/nandhi/cmd_vel">
+        <output type="ignition.msgs.Twist" topic="/model/nandhi/cmd_vel">
           linear: {x: -0.5}, angular: {z: 0.0}
         </output>
       </plugin>
@@ -134,7 +133,7 @@
         <input type="ignition.msgs.Int32" topic="/keyboard/keypress">
           <match field="data">16777234</match>
         </input>
-        <output type="ignition.msgs.Twist" topic="/nandhi/cmd_vel">
+        <output type="ignition.msgs.Twist" topic="/model/nandhi/cmd_vel">
           linear: {x: 0.0}, angular: {z: 0.5}
         </output>
       </plugin>
@@ -144,11 +143,14 @@
         <input type="ignition.msgs.Int32" topic="/keyboard/keypress">
           <match field="data">16777236</match>
         </input>
-        <output type="ignition.msgs.Twist" topic="/nandhi/cmd_vel">
+        <output type="ignition.msgs.Twist" topic="/model/nandhi/cmd_vel">
           linear: {x: 0.0}, angular: {z: -0.5}
         </output>
       </plugin>
     </model>
-
+    <include>
+      <pose>0 0 0 0 0 1.57</pose>
+      <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/Playground</uri>
+    </include>
   </world>
 </sdf>
