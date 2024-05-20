@@ -33,7 +33,7 @@ def generate_launch_description():
         launch_arguments={'gz_args': "-v 4 -r "+os.path.join(
             pkg_project_gazebo,
             'worlds',
-            'lidar.sdf'
+            'indoor.sdf'
         )}.items(),
     )
 

@@ -6,9 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /RobotModel1
         - /RobotModel1/Description Topic1
-        - /LaserScan1
       Splitter Ratio: 0.41458332538604736
     Tree Height: 1098
   - Class: rviz_common/Selection
@@ -28,7 +26,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: LaserScan
+    SyncSource: ""
 Visualization Manager:
   Class: ""
   Displays:
@@ -86,19 +84,19 @@ Visualization Manager:
       Channel Name: intensity
       Class: rviz_default_plugins/LaserScan
       Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color Transformer: ""
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 0
+      Max Intensity: 4096
       Min Color: 0; 0; 0
       Min Intensity: 0
       Name: LaserScan
-      Position Transformer: XYZ
+      Position Transformer: ""
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.10000000149011612
+      Size (m): 0.009999999776482582
       Style: Flat Squares
       Topic:
         Depth: 5
@@ -113,7 +111,7 @@ Visualization Manager:
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: vehicle_blue/lidar_link/gpu_lidar
+    Fixed Frame: nandhi/lidar_link/gpu_lidar
     Frame Rate: 30
   Name: root
   Tools:
@@ -171,10 +169,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.5397963523864746
+      Pitch: 1.3397961854934692
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 3.460411310195923
+      Yaw: 2.100412368774414
     Saved: ~
 Window Geometry:
   Displays:
