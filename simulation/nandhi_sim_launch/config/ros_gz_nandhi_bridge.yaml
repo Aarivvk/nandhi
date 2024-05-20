@@ -1,0 +1,11 @@
+- ros_topic_name: "/nandhi/cmd_vel"
+  gz_topic_name: "/model/vehicle_blue/cmd_vel"
+  ros_type_name: "geometry_msgs/msg/Twist"
+  gz_type_name: "ignition.msgs.Twist"
+  direction: ROS_TO_IGN
+
+- ros_topic_name: "/laser_scan"
+  gz_topic_name: "/lidar2"
+  ros_type_name: "sensor_msgs/msg/LaserScan"
+  gz_type_name: "ignition.msgs.LaserScan"
+  direction: IGN_TO_ROS

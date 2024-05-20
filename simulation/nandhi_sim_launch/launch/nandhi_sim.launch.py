@@ -30,11 +30,11 @@ def generate_launch_description():
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
-        launch_arguments={'gz_args': PathJoinSubstitution([
+        launch_arguments={'gz_args': "-v 4 -r "+os.path.join(
             pkg_project_gazebo,
             'worlds',
-            'indoor.sdf'
-        ])}.items(),
+            'lidar.sdf'
+        )}.items(),
     )
 
     # Takes the description and joint angles as inputs and publishes the 3D poses of the robot links
@@ -86,7 +86,7 @@ def generate_launch_description():
         DeclareLaunchArgument('rviz', default_value='true',
                              description='Open RViz.'),
         bridge,
-        robot_state_publisher,
-        joint_state_publisher_gui,
+        #robot_state_publisher,
+        #joint_state_publisher_gui,
         rviz
     ])
