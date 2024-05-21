@@ -8,6 +8,7 @@
 #include <memory>
 #include <signal.h>
 #include <stdio.h>
+#include <cmath> // For tan function
 
 using namespace std::chrono_literals;
 
@@ -80,7 +81,7 @@ void KeyEventManager::run()
     while (!terminate)
     {
         read_key_press();
-        std::this_thread::sleep_for(std::chrono::milliseconds(40));
+        std::this_thread::sleep_for(40ms);
     }
 }
 
@@ -169,6 +170,11 @@ int main(int argc, char *argv[])
         nandhi_msg_types::msg::AckermannDrive msg{};
         msg.speed = speed;
         msg.steering_angle = steering;
+        auto redian_range_min = -0.6;
+        auto redian_range_max = 0.6;
+        auto steering_theta = redian_range_min + (((steering - servo_min) * (redian_range_max - redian_range_min)) / (servo_max - servo_min));
+        auto angular_velocity = (speed * tan(steering_theta)) / 0.2;
+
         ros2_ackerman_pub->set_msg(msg);
 
         executor.spin_once();
