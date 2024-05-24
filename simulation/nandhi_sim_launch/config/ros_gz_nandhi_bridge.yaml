@@ -1,35 +1,41 @@
+- ros_topic_name: "/clock"
+  gz_topic_name: "/clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "gz.msgs.Clock"
+  direction: GZ_TO_ROS
+
 - ros_topic_name: "/nandhi/cmd_vel"
   gz_topic_name: "/model/nandhi/cmd_vel"
   ros_type_name: "geometry_msgs/msg/Twist"
-  gz_type_name: "ignition.msgs.Twist"
-  direction: ROS_TO_IGN
+  gz_type_name: "gz.msgs.Twist"
+  direction: ROS_TO_GZ
 
 - ros_topic_name: "/laser_scan"
   gz_topic_name: "/model/nandhi/lidar"
   ros_type_name: "sensor_msgs/msg/LaserScan"
-  gz_type_name: "ignition.msgs.LaserScan"
-  direction: IGN_TO_ROS
+  gz_type_name: "gz.msgs.LaserScan"
+  direction: GZ_TO_ROS
 
 - ros_topic_name: "/laser_scan/points"
   gz_topic_name: "/model/nandhi/lidar/points"
   ros_type_name: "sensor_msgs/msg/PointCloud2"
-  gz_type_name: "ignition.msgs.PointCloudPacked"
-  direction: IGN_TO_ROS
+  gz_type_name: "gz.msgs.PointCloudPacked"
+  direction: GZ_TO_ROS
 
 - ros_topic_name: "/tf"
   gz_topic_name: "/model/nandhi/tf"
   ros_type_name: "tf2_msgs/msg/TFMessage"
-  gz_type_name: "ignition.msgs.Pose_V"
+  gz_type_name: "gz.msgs.Pose_V"
   direction: GZ_TO_ROS
 
 - ros_topic_name: "/clock"
   gz_topic_name: "/clock"
   ros_type_name: "rosgraph_msgs/msg/clock"
-  gz_type_name: "ignition.msgs.Clock"
+  gz_type_name: "gz.msgs.Clock"
   direction: GZ_TO_ROS
 
 - ros_topic_name: "/nandhi/odometry"
   gz_topic_name: "/model/nandhi/odometry"
   ros_type_name: "nav_msgs/msg/Odometry"
-  gz_type_name: "ignition.msgs.Odometry"
+  gz_type_name: "gz.msgs.Odometry"
   direction: GZ_TO_ROS
