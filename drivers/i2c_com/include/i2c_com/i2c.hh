@@ -10,6 +10,7 @@ extern "C"
 #include <string.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
+#include <stdint.h>
 }
 
 #include <string>

@@ -7,7 +7,7 @@ import sys
 
 build_cmd = "colcon build --symlink-install"
 bulid_status=0
-os.system("/opt/ros/rolling/setup.sh")
+os.system("/opt/ros/jazzy/setup.sh")
 
 MAIN_OPS = {"build": "builds the packages for you",
             "install": "install the prerequisite drivers",
