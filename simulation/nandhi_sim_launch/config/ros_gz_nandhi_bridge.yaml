@@ -10,6 +10,12 @@
   gz_type_name: "gz.msgs.Twist"
   direction: ROS_TO_GZ
 
+- ros_topic_name: "/camera"
+  gz_topic_name: "/model/nandhi/camera"
+  ros_type_name: "sensor_msgs/msg/Image"
+  gz_type_name: "gz.msgs.Image"
+  direction: GZ_TO_ROS
+
 - ros_topic_name: "/laser_scan"
   gz_topic_name: "/model/nandhi/lidar"
   ros_type_name: "sensor_msgs/msg/LaserScan"
