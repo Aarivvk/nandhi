@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<sdf version="1.9">
+<sdf version="1.8">
   <world name="indoor">
 
     <physics name="1ms" type="ignored">
@@ -88,6 +88,27 @@
       </include>
 
       <plugin
+        filename="gz-sim-joint-state-publisher-system"
+        name="gz::sim::systems::JointStatePublisher">
+      </plugin>
+
+      <plugin
+        filename="gz-sim-pose-publisher-system"
+        name="gz::sim::systems::PosePublisher">
+        <publish_link_pose>true</publish_link_pose>
+        <use_pose_vector_msg>true</use_pose_vector_msg>
+        <static_publisher>true</static_publisher>
+        <static_update_frequency>1</static_update_frequency>
+      </plugin>
+
+      <plugin
+        filename="gz-sim-odometry-publisher-system"
+        name="gz::sim::systems::OdometryPublisher">
+        <odom_frame>nandhi/odom</odom_frame>
+        <robot_base_frame>nandhi</robot_base_frame>
+      </plugin>
+
+      <plugin
         filename="gz-sim-ackermann-steering-system"
         name="gz::sim::systems::AckermannSteering">
         <left_joint>front_left_wheel_joint</left_joint>
@@ -105,6 +126,7 @@
         <max_velocity>100</max_velocity>
         <min_acceleration>-5</min_acceleration>
         <max_acceleration>5</max_acceleration>
+        <odom_publish_frequency>1</odom_publish_frequency>
       </plugin>
 
       <!-- Moving Forward-->
