@@ -48,16 +48,6 @@ def generate_launch_description():
             {'robot_description': robot_desc},
         ]
     )
-    
-    # For publishing and controlling the robot pose, we need joint states of the robot
-    # Configure the robot model by adjusting the joint angles using the GUI slider
-    joint_state_publisher = Node(
-        package='joint_state_publisher',
-        executable='joint_state_publisher',
-        name='joint_state_publisher',
-        arguments=[sdf_file],
-        output=['screen']
-    )
 
     # Visualize in RViz
     rviz = Node(
@@ -87,6 +77,5 @@ def generate_launch_description():
                              description='Open RViz.'),
         bridge,
         robot_state_publisher,
-        joint_state_publisher,
         rviz
     ])

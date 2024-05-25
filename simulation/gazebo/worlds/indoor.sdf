@@ -25,13 +25,6 @@
       <render_engine>ogre2</render_engine>
     </plugin>
 
-    <!-- TODO Find the correct path of the lib file for keypblisher
-    Work around use GUI -->
-    <!-- <plugin
-      filename="gz-sim-gui-key-publisher-system"
-      name="gz::sim::gui::KeyPublisher">
-    </plugin> -->
-
     <light type="directional" name="sun">
       <cast_shadows>true</cast_shadows>
       <pose>0 0 10 0 0 0</pose>
@@ -80,13 +73,40 @@
       </link>
     </model>
 
-    <include>
-      <uri>package://nandhi_description/models/nandhi</uri>
-    </include>
+    <model name="nandhi">
+      <self_collide>true</self_collide>
+      <pose>0 0 0.35 0 0 0</pose>
+      <include merge="true">
+        <uri>package://nandhi_description/models/nandhi</uri>
+      </include>
+
+      <plugin
+        filename="gz-sim-joint-state-publisher-system"
+        name="gz::sim::systems::JointStatePublisher">
+      </plugin>
+
+      <plugin
+        filename="gz-sim-pose-publisher-system"
+        name="gz::sim::systems::PosePublisher">
+        <publish_link_pose>true</publish_link_pose>
+        <use_pose_vector_msg>true</use_pose_vector_msg>
+        <static_publisher>true</static_publisher>
+        <static_update_frequency>1</static_update_frequency>
+      </plugin>
+
+      <plugin
+        filename="gz-sim-odometry-publisher-system"
+        name="gz::sim::systems::OdometryPublisher">
+        <odom_frame>nandhi/odom</odom_frame>
+        <robot_base_frame>nandhi</robot_base_frame>
+      </plugin>
+    </model>
+
     <include>
       <pose>0 0 0 0 0 1.57</pose>
       <uri>https://fuel.gazebosim.org/1.0/openrobotics/models/Playground</uri>
     </include>
+
   </world>
 
 </sdf>
