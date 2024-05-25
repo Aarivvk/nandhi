@@ -62,6 +62,12 @@ I am aproching this task in below Phases fasion.
 To launch simulation
 
 ```bash
+# Shel A
 source install/setup.bash
 ros2 launch nandhi_sim_launch nandhi_sim.launch.py
+```
+```bash
+# Shel B
+# To make robot move
+ros2 topic pub /nandhi/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 5.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: -0.22}}"
 ```
