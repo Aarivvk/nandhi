@@ -370,7 +370,7 @@
         </collision>
       </link>
 
-      <joint name='lidar_sensor_joint' type='fixed'>
+      <joint name='lidar_joint' type='fixed'>
         <parent>chassis</parent>
         <child>lidar_link</child>
       </joint>

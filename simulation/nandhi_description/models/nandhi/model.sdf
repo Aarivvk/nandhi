@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
-<sdf version="1.9">
+<sdf version="1.8">
   <model name='nandhi'>
-    <pose>0 2 0.325 0 -0 0</pose>
-
     <link name='chassis'>
       <pose>-0.151427 -0 0.175 0 -0 0</pose>
       <inertial>
@@ -336,7 +334,6 @@
           <velocity>1.0</velocity>
           <effort>25</effort>
         </limit>
-        <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
 
