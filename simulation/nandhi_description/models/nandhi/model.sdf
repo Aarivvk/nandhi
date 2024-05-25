@@ -394,61 +394,6 @@
         <max_acceleration>3</max_acceleration>
       </plugin>
 
-    <plugin
-      filename="gz-sim-joint-state-publisher-system"
-      name="gz::sim::systems::JointStatePublisher">
-    </plugin>
-
-    <plugin
-      filename="gz-sim-pose-publisher-system"
-      name="gz::sim::systems::PosePublisher">
-      <publish_link_pose>true</publish_link_pose>
-      <use_pose_vector_msg>true</use_pose_vector_msg>
-      <static_publisher>true</static_publisher>
-      <static_update_frequency>1</static_update_frequency>
-    </plugin>
-
-    <!-- Moving Forward-->
-    <plugin filename="gz-sim-triggered-publisher-system"
-      name="gz::sim::systems::TriggeredPublisher">
-      <input type="gz.msgs.Int32" topic="/keyboard/keypress">
-        <match field="data">16777235</match>
-      </input>
-      <output type="gz.msgs.Twist" topic="/model/nandhi/cmd_vel">
-        linear: {x: 0.5}, angular: {z: 0.0}
-      </output>
-    </plugin>
-    <!-- Moving Backward-->
-    <plugin filename="gz-sim-triggered-publisher-system"
-      name="gz::sim::systems::TriggeredPublisher">
-      <input type="gz.msgs.Int32" topic="/keyboard/keypress">
-        <match field="data">16777237</match>
-      </input>
-      <output type="gz.msgs.Twist" topic="/model/nandhi/cmd_vel">
-        linear: {x: -0.5}, angular: {z: 0.0}
-      </output>
-    </plugin>
-    <!-- Moving left-->
-    <plugin filename="gz-sim-triggered-publisher-system"
-      name="gz::sim::systems::TriggeredPublisher">
-      <input type="gz.msgs.Int32" topic="/keyboard/keypress">
-        <match field="data">16777234</match>
-      </input>
-      <output type="gz.msgs.Twist" topic="/model/nandhi/cmd_vel">
-        linear: {x: 0.0}, angular: {z: 0.5}
-      </output>
-    </plugin>
-    <!-- Moving right-->
-    <plugin filename="gz-sim-triggered-publisher-system"
-      name="gz::sim::systems::TriggeredPublisher">
-      <input type="gz.msgs.Int32" topic="/keyboard/keypress">
-        <match field="data">16777236</match>
-      </input>
-      <output type="gz.msgs.Twist" topic="/model/nandhi/cmd_vel">
-        linear: {x: 0.0}, angular: {z: -0.5}
-      </output>
-    </plugin>
-
     </model>
 
 </sdf>
