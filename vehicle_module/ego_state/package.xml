@@ -4,7 +4,7 @@
   <name>ego_state</name>
   <version>0.0.1</version>
   <description>A ROS2 package that recvies topics on ego ensor and publishes ros2 viz topics</description>
-  <maintainer email="vinaya.rvce@gmail.com">vk</maintainer>
+  <maintainer email="8676836+Aarivvk@users.noreply.github.com">vk</maintainer>
   <license>MIT</license>
 
   <build_depend>rclcpp</build_depend>

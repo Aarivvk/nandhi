@@ -4,7 +4,7 @@
   <name>i2c_pwm_pca9685</name>
   <version>0.0.1</version>
   <description>I2C communication driver</description>
-  <maintainer email="vinaya.rvce@gmail.com">vk</maintainer>
+  <maintainer email="8676836+Aarivvk@users.noreply.github.com">vk</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
