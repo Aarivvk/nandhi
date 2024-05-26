@@ -4,7 +4,7 @@
   <name>vehicle_control_system</name>
   <version>0.0.1</version>
   <description>Keyboard key input to ackermann msgs converter</description>
-  <maintainer email="vinaya.rvce@gmail.com">vk</maintainer>
+  <maintainer email="8676836+Aarivvk@users.noreply.github.com">vk</maintainer>
   <license>MIT</license>
 
   <depend>rclcpp</depend>
