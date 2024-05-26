@@ -66,8 +66,39 @@ To launch simulation
 source install/setup.bash
 ros2 launch nandhi_sim_launch nandhi_sim.launch.py
 ```
+
 ```bash
 # Shel B
 # To make robot move
 ros2 topic pub /nandhi/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 5.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: -0.22}}"
+# OR
+./install/key_to_twist/lib/key_to_twist/key_to_twist
 ```
+
+To listen the Twist value run below binary
+
+```bash
+# Shell C
+./build/key_to_twist/key_to_twist_test
+```
+
+
+## Nandhi constants
+
+**Maximum Linear Velocity**
+
+Maximu speed: 50 k/h
+Wheel Diameter: 0.1 m
+
+max_linear_velocity = 13.89 m/s
+
+**Maximum Angular Velocity**
+wheel base W: 0.29 m
+
+max_angular_velocity = max_linear_velocity/W
+max_angular_velocity = 47.9 rad/s
+
+- 8500 rpm
+- (L x W x H) 532 x 290 x 195 mm
+
+[Vehicle link](https://www.conrad.de/de/p/reely-eraser-brushless-1-10-rc-modellauto-elektro-short-course-allradantrieb-4wd-100-rtr-2-4-ghz-inkl-akku-ladeger-1976297.html#productTechData)
