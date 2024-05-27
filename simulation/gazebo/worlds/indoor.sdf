@@ -24,14 +24,6 @@
       filename="gz-sim-user-commands-system"
       name="gz::sim::systems::UserCommands">
     </plugin>
-    <plugin
-      filename="BasicSystem"
-      name="ros_gz_example_gazebo::BasicSystem">
-    </plugin>
-    <plugin
-      filename="FullSystem"
-      name="ros_gz_example_gazebo::FullSystem">
-    </plugin>
 
     <light type="directional" name="sun">
       <cast_shadows>true</cast_shadows>
