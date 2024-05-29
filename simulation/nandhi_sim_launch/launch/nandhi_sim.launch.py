@@ -71,21 +71,22 @@ def generate_launch_description():
         output='screen'
     )
 
-    # spawn = Node(package='ros_gz_sim', executable='create',
-    #             parameters=[{
-    #             'name': 'nandhi',
-    #             'x': 0,
-    #             'z': 0,
-    #             'Y': 0,
-    #             'topic': '/robot_description'}],
-    #             output='screen')
+    spawn = Node(package='ros_gz_sim', executable='create',
+                parameters=[{
+                'world': 'indoor',
+                'name': 'nandhi',
+                'x': 0.0,
+                'z': 0.0,
+                'Y': 0.0,
+                'topic': '/robot_description'}],
+                output='screen')
 
     return LaunchDescription([
         gz_sim,
         DeclareLaunchArgument('rviz', default_value='true',
                              description='Open RViz.'),
+        rviz,
         bridge,
         robot_state_publisher,
-        # spawn,
-        rviz
+        spawn
     ])
