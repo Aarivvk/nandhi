@@ -164,8 +164,7 @@ int main(int argc, char *argv[]) {
 
     std::cout << "\rspeed " << speed << " acceleration " << acceleration
               << " angular " << angular << " steering " << steering << " range "
-              << range << " max_linear_velocity " << max_linear_velocity
-              << std::endl;
+              << range << " max_linear_velocity " << max_linear_velocity << std::flush;
 
     executor.spin_once();
     std::this_thread::sleep_for(std::chrono::milliseconds(40));
