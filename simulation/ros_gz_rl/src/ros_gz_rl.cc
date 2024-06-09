@@ -1,11 +1,17 @@
-#include <gz/msgs/entity_factory.pb.h>
 #include <gz/msgs/Utility.hh>
+#include <gz/msgs/entity_factory.pb.h>
+#include <gz/msgs/world_control.pb.h>
 #include <gz/sim/Server.hh>
 #include <gz/transport/Node.hh>
 
+#include <chrono>
 #include <csignal>
+#include <fstream>
 #include <iostream>
+#include <string>
 #include <unistd.h>
+
+using namespace std::chrono_literals;
 
 bool is_terminated{false};
 
@@ -14,6 +20,14 @@ gz::transport::Node node;
 
 // timeout used for services
 constexpr unsigned int timeout = 5000;
+
+void GetModelString(std::string &buffer, std::string model_path) {
+  std::ifstream model_file(model_path);
+  model_file.seekg(0, std::ios::end);
+  buffer.resize(model_file.tellg());
+  model_file.seekg(0);
+  model_file.read(buffer.data(), buffer.size());
+}
 
 // Signal handler function
 void signalHandler(int signum) {
@@ -24,56 +38,67 @@ void signalHandler(int signum) {
   is_terminated = true;
 }
 
-void createEntityFromStr(const std::string &modelStr,
-                         const std::string &world_name) {
-  //! [call service create sphere]
+template <class Request, class Response>
+bool SendRequest(std::string service_name, Request req, Response res) {
   bool result;
-  gz::msgs::EntityFactory req;
-  gz::msgs::Boolean res;
-  req.set_sdf(modelStr);
-
-  bool executed =
-      node.Request("/world/empty/create", req, timeout, res, result);
+  bool executed = node.Request(service_name, req, timeout, res, result);
   if (executed) {
     if (result)
-      std::cout << "Entity was created : [" << res.data() << "]" << std::endl;
+      std::cout << "Request exicuted : [" << res.data() << "]" << std::endl;
     else {
-      std::cout << "Service call failed" << std::endl;
-      return;
+      std::cerr << "[createEntityFromStr] Service call failed" << std::endl;
     }
-  } else
-    std::cerr << "Service call timed out" << std::endl;
-  //! [call service create sphere]
+  } else {
+    std::cerr << "[createEntityFromStr] Service call timed out" << std::endl;
+  }
+
+  return executed && result;
+}
+
+bool createEntityFromStr(const std::string &modelStr,
+                         const std::string &world_name) {
+  gz::msgs::EntityFactory req;
+  gz::msgs::Boolean res;
+
+  req.set_sdf(modelStr);
+
+  bool executed = SendRequest<gz::msgs::EntityFactory, gz::msgs::Boolean>(
+      "/world/" + world_name + "/create", req, res);
+
+  return executed;
+}
+
+bool StepServer() {
+  std::string service_name{"/world/indoor/control"};
+  gz::msgs::WorldControl req;
+  gz::msgs::Boolean res;
+
+  req.set_pause(true);
+  req.set_step(true);
+  req.set_multi_step(200);
+
+  bool executed = SendRequest<gz::msgs::WorldControl, gz::msgs::Boolean>(
+      service_name, req, res);
+  return executed;
 }
 
 int main() {
   // Register signal handler for SIGINT
   signal(SIGINT, signalHandler);
 
-  gz::common::Console::SetVerbosity(4);
+  //! [create Nandhi entity]
+  std::string modelStr;
+  GetModelString(modelStr, "install/nandhi_description/share/"
+                           "nandhi_description/models/nandhi/model.sdf");
 
-  gz::sim::ServerConfig serverConfig;
+  createEntityFromStr(modelStr, "indoor");
 
-  serverConfig.SetSdfFile("./install/gazebo/share/gazebo/worlds/indoor.sdf");
-
-  gz::sim::Server server(serverConfig);
-
-  server.RunOnce(false);
-
-  std::cout << "Press Ctrl+C to terminate the program...\n";
-
-  // Infinite loop to keep the program running
   while (!is_terminated) {
-    // Send observation
-    // Get action from cmd_vel
-    // Get reset command
-    // 1 Step into the simulation with given action
-    // Collect the state and observation
-    // send information back
-    is_terminated = !server.RunOnce(false);
+    StepServer();
+    std::this_thread::sleep_for(1000ms);
   }
 
-  server.Stop();
+  std::cout << "Program terminated" << std::endl;
 
   return 0;
 }
