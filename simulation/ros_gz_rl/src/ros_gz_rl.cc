@@ -10,6 +10,9 @@
 #include <iostream>
 #include <string>
 
+#include "nandhi_msg_types/srv/get_observations.hpp"
+#include "rclcpp/rclcpp.hpp"
+
 using namespace std::chrono_literals;
 
 bool is_terminated{false};
@@ -21,84 +24,103 @@ gz::transport::Node node;
 constexpr unsigned int timeout = 5000;
 
 void GetModelString(std::string &buffer, std::string model_path) {
-  std::ifstream model_file(model_path);
-  model_file.seekg(0, std::ios::end);
-  buffer.resize(model_file.tellg());
-  model_file.seekg(0);
-  model_file.read(buffer.data(), buffer.size());
+    std::ifstream model_file(model_path);
+    model_file.seekg(0, std::ios::end);
+    buffer.resize(model_file.tellg());
+    model_file.seekg(0);
+    model_file.read(buffer.data(), buffer.size());
 }
 
 // Signal handler function
 void signalHandler(int signum) {
-  std::cout << "\nInterrupt signal (" << signum << ") received.\n";
+    std::cout << "\nInterrupt signal (" << signum << ") received.\n";
 
-  // Cleanup and close up stuff here
-  // Terminate program
-  is_terminated = true;
+    // Cleanup and close up stuff here
+    // Terminate program
+    is_terminated = true;
 }
 
 template <class Request, class Response>
 bool SendRequest(std::string service_name, Request req, Response res) {
-  bool result;
-  bool executed = node.Request(service_name, req, timeout, res, result);
-  if (executed) {
-    if (result)
-      std::cout << "Request exicuted : [" << res.data() << "]" << std::endl;
-    else {
-      std::cerr << "[createEntityFromStr] Service call failed" << std::endl;
+    bool result;
+    bool executed = node.Request(service_name, req, timeout, res, result);
+    if (executed) {
+        if (result)
+            std::cout << "Request exicuted : [" << res.data() << "]"
+                      << std::endl;
+        else {
+            std::cerr << "[createEntityFromStr] Service call failed"
+                      << std::endl;
+        }
+    } else {
+        std::cerr << "[createEntityFromStr] Service call timed out"
+                  << std::endl;
     }
-  } else {
-    std::cerr << "[createEntityFromStr] Service call timed out" << std::endl;
-  }
 
-  return executed && result;
+    return executed && result;
 }
 
 bool createEntityFromStr(const std::string &modelStr,
                          const std::string &world_name) {
-  gz::msgs::EntityFactory req;
-  gz::msgs::Boolean res;
+    gz::msgs::EntityFactory req;
+    gz::msgs::Boolean res;
 
-  req.set_sdf(modelStr);
+    req.set_sdf(modelStr);
 
-  bool executed = SendRequest<gz::msgs::EntityFactory, gz::msgs::Boolean>(
-      "/world/" + world_name + "/create", req, res);
+    bool executed = SendRequest<gz::msgs::EntityFactory, gz::msgs::Boolean>(
+        "/world/" + world_name + "/create", req, res);
 
-  return executed;
+    return executed;
 }
 
 bool StepServer() {
-  std::string service_name{"/world/indoor/control"};
-  gz::msgs::WorldControl req;
-  gz::msgs::Boolean res;
+    std::string service_name{"/world/indoor/control"};
+    gz::msgs::WorldControl req;
+    gz::msgs::Boolean res;
 
-  req.set_pause(true);  // Keep paused after the request
-  req.set_step(true);  // Take a single step
-  req.set_multi_step(500);  // Run the simulation for 0.5s
+    req.set_pause(true);      // Keep paused after the request
+    req.set_step(true);       // Take a single step
+    req.set_multi_step(500);  // Run the simulation for 0.5s
 
-  bool executed = SendRequest<gz::msgs::WorldControl, gz::msgs::Boolean>(
-      service_name, req, res);
-  return executed;
+    bool executed = SendRequest<gz::msgs::WorldControl, gz::msgs::Boolean>(
+        service_name, req, res);
+    return executed;
 }
 
-int main() {
-  // Register signal handler for SIGINT
-  signal(SIGINT, signalHandler);
+// TODO: Add function defintion
+void ProcessRequest(
+    const std::shared_ptr<nandhi_msg_types::srv::GetObservations::Request>
+        request,
+    std::shared_ptr<nandhi_msg_types::srv::GetObservations::Response>
+        response) {}
 
-  //! [create Nandhi entity]
-  std::string modelStr;
-  GetModelString(modelStr,
-                 "install/nandhi_description/share/"
-                 "nandhi_description/models/nandhi/model.sdf");
+int main(int argc, const char *const *argv) {
+    // Register signal handler for SIGINT
+    signal(SIGINT, signalHandler);
 
-  createEntityFromStr(modelStr, "indoor");
+    //! [create Nandhi entity]
+    std::string modelStr;
+    GetModelString(modelStr,
+                   "install/nandhi_description/share/"
+                   "nandhi_description/models/nandhi/model.sdf");
 
-  while (!is_terminated) {
-    StepServer();
-    std::this_thread::sleep_for(1000ms);
-  }
+    createEntityFromStr(modelStr, "indoor");
 
-  std::cout << "Program terminated" << std::endl;
+    rclcpp::init(argc, argv);
+    std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("ros_gz_rl");
+    rclcpp::Service<nandhi_msg_types::srv::GetObservations>::SharedPtr service =
+        node->create_service<nandhi_msg_types::srv::GetObservations>(
+            "ros_gz_rl", &ProcessRequest);
 
-  return 0;
+    while (!is_terminated) {
+        StepServer();
+        rclcpp::spin(node);
+        std::this_thread::sleep_for(1000ms);
+    }
+
+    rclcpp::shutdown();
+
+    std::cout << "Program terminated" << std::endl;
+
+    return 0;
 }

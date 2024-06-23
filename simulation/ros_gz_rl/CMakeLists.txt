@@ -10,6 +10,8 @@ if(NOT CMAKE_CXX_STANDARD)
 endif()
 
 find_package(ament_cmake REQUIRED)
+find_package(rclcpp REQUIRED)
+find_package(nandhi_msg_types REQUIRED)
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
   
@@ -26,6 +28,8 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
   
   target_link_libraries(${PROJECT_NAME}
     gz-sim${GZ_SIM_VER}::gz-sim${GZ_SIM_VER} gz-transport${GZ_TRANSPORT_VER}::core)
+
+  ament_target_dependencies(${PROJECT_NAME}  rclcpp nandhi_msg_types)
 
 endif()
 
