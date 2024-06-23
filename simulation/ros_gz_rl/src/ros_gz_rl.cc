@@ -72,9 +72,9 @@ bool StepServer() {
   gz::msgs::WorldControl req;
   gz::msgs::Boolean res;
 
-  req.set_pause(true);
-  req.set_step(true);
-  req.set_multi_step(200);
+  req.set_pause(true);  // Keep paused after the request
+  req.set_step(true);  // Take a single step
+  req.set_multi_step(500);  // Run the simulation for 0.5s
 
   bool executed = SendRequest<gz::msgs::WorldControl, gz::msgs::Boolean>(
       service_name, req, res);
