@@ -1,0 +1,10 @@
+# This service offers the action spaces as request and observation as response
+
+
+geometry_msgs/Twist action
+bool reset
+bool step
+---
+sensor_msgs/Image image
+sensor_msgs/LaserScan scan
+bool crash
