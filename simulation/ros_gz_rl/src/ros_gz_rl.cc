@@ -1,15 +1,14 @@
-#include <gz/msgs/Utility.hh>
 #include <gz/msgs/entity_factory.pb.h>
 #include <gz/msgs/world_control.pb.h>
-#include <gz/sim/Server.hh>
-#include <gz/transport/Node.hh>
+#include <unistd.h>
 
-#include <chrono>
 #include <csignal>
 #include <fstream>
+#include <gz/msgs/Utility.hh>
+#include <gz/sim/Server.hh>
+#include <gz/transport/Node.hh>
 #include <iostream>
 #include <string>
-#include <unistd.h>
 
 using namespace std::chrono_literals;
 
@@ -88,8 +87,9 @@ int main() {
 
   //! [create Nandhi entity]
   std::string modelStr;
-  GetModelString(modelStr, "install/nandhi_description/share/"
-                           "nandhi_description/models/nandhi/model.sdf");
+  GetModelString(modelStr,
+                 "install/nandhi_description/share/"
+                 "nandhi_description/models/nandhi/model.sdf");
 
   createEntityFromStr(modelStr, "indoor");
 
