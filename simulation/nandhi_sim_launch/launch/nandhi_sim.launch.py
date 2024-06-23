@@ -81,12 +81,16 @@ def generate_launch_description():
                 'topic': '/robot_description'}],
                 output='screen')
 
+    sim_control = Node(package='ros_gz_rl',
+                       executable='ros_gz_rl')
+
     return LaunchDescription([
         gz_sim,
         DeclareLaunchArgument('rviz', default_value='true',
                              description='Open RViz.'),
         rviz,
         bridge,
-        robot_state_publisher
+        robot_state_publisher,
         #spawn
+        sim_control
     ])
