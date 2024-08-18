@@ -8,6 +8,7 @@
 #include <gz/sim/Server.hh>
 #include <gz/transport/Node.hh>
 #include <iostream>
+#include <ostream>
 #include <string>
 
 #include "nandhi_msg_types/srv/get_observations.hpp"
@@ -18,7 +19,7 @@ using namespace std::chrono_literals;
 bool is_terminated{false};
 
 // Create a transport node.
-gz::transport::Node node;
+gz::transport::Node t_node;
 
 // timeout used for services
 constexpr unsigned int timeout = 5000;
@@ -43,10 +44,10 @@ void signalHandler(int signum) {
 template <class Request, class Response>
 bool SendRequest(std::string service_name, Request req, Response res) {
     bool result;
-    bool executed = node.Request(service_name, req, timeout, res, result);
+    bool executed = t_node.Request(service_name, req, timeout, res, result);
     if (executed) {
         if (result)
-            std::cout << "Request exicuted : [" << res.data() << "]"
+            std::cout << "Request executed : [" << res.data() << "]"
                       << std::endl;
         else {
             std::cerr << "[createEntityFromStr] Service call failed"
@@ -107,14 +108,21 @@ int main(int argc, const char *const *argv) {
     createEntityFromStr(modelStr, "indoor");
 
     rclcpp::init(argc, argv);
-    std::shared_ptr<rclcpp::Node> node = rclcpp::Node::make_shared("ros_gz_rl");
+    std::shared_ptr<rclcpp::Node> ros_node =
+        rclcpp::Node::make_shared("ros_gz_rl");
     rclcpp::Service<nandhi_msg_types::srv::GetObservations>::SharedPtr service =
-        node->create_service<nandhi_msg_types::srv::GetObservations>(
+        ros_node->create_service<nandhi_msg_types::srv::GetObservations>(
             "ros_gz_rl", &ProcessRequest);
 
     while (!is_terminated) {
-        StepServer();
-        rclcpp::spin(node);
+        bool ret = StepServer();
+        if (!ret) {
+            std::cerr << "RL: Step failed" << std::endl;
+        }
+        std::cerr << "RL: Spin" << std::endl;
+        // rclcpp::spin(ros_node);
+        /* Until the ProcessRequest is implemented sleep for 1s, once it is
+         implemented the cycle can be adjusted or let it driven by the client.*/
         std::this_thread::sleep_for(1000ms);
     }
 

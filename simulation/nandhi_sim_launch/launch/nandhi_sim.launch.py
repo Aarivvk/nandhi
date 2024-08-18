@@ -30,7 +30,7 @@ def generate_launch_description():
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
-        launch_arguments={'gz_args': os.path.join(
+        launch_arguments={'gz_args': '-r '+os.path.join(
             pkg_project_gazebo,
             'worlds',
             'indoor.sdf'
@@ -82,7 +82,8 @@ def generate_launch_description():
                 output='screen')
 
     sim_control = Node(package='ros_gz_rl',
-                       executable='ros_gz_rl')
+                       executable='ros_gz_rl',
+                       output='screen')
 
     return LaunchDescription([
         gz_sim,
