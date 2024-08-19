@@ -86,12 +86,12 @@ def generate_launch_description():
                        output='screen')
 
     return LaunchDescription([
-        gz_sim,
-        DeclareLaunchArgument('rviz', default_value='true',
+        DeclareLaunchArgument('rviz', default_value='false',
                              description='Open RViz.'),
-        rviz,
+        gz_sim,
         bridge,
+        # spawn
+        sim_control,
         robot_state_publisher,
-        #spawn
-        sim_control
+        rviz
     ])

@@ -46,10 +46,7 @@ bool SendRequest(std::string service_name, Request req, Response res) {
     bool result;
     bool executed = t_node.Request(service_name, req, timeout, res, result);
     if (executed) {
-        if (result)
-            std::cout << "Request executed : [" << res.data() << "]"
-                      << std::endl;
-        else {
+        if (!result) {
             std::cerr << "[createEntityFromStr] Service call failed"
                       << std::endl;
         }
@@ -99,6 +96,8 @@ int main(int argc, const char *const *argv) {
     // Register signal handler for SIGINT
     signal(SIGINT, signalHandler);
 
+    // TODO : Get the path from arguments
+
     //! [create Nandhi entity]
     std::string modelStr;
     GetModelString(modelStr,
@@ -106,6 +105,7 @@ int main(int argc, const char *const *argv) {
                    "nandhi_description/models/nandhi/model.sdf");
 
     createEntityFromStr(modelStr, "indoor");
+    //! [create Nandhi entity]
 
     rclcpp::init(argc, argv);
     std::shared_ptr<rclcpp::Node> ros_node =
@@ -119,7 +119,6 @@ int main(int argc, const char *const *argv) {
         if (!ret) {
             std::cerr << "RL: Step failed" << std::endl;
         }
-        std::cerr << "RL: Spin" << std::endl;
         // rclcpp::spin(ros_node);
         /* Until the ProcessRequest is implemented sleep for 1s, once it is
          implemented the cycle can be adjusted or let it driven by the client.*/
