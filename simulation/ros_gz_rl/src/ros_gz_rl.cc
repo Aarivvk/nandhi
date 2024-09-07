@@ -6,28 +6,29 @@
 #include <unistd.h>
 
 #include <csignal>
+#include <cstdint>
 #include <fstream>
 #include <gz/msgs/Utility.hh>
 #include <gz/sim/Server.hh>
 #include <gz/transport/Node.hh>
 #include <iostream>
 #include <ostream>
+#include <rclcpp/utilities.hpp>
 #include <string>
 
 #include "nandhi_msg_types/srv/get_observations.hpp"
 #include "rclcpp/rclcpp.hpp"
 
 using namespace std::chrono_literals;
-
-bool is_terminated{false};
+// timeout used for services
+constexpr unsigned int timeout = 5000;
 
 bool is_crashed{false};
 
 // Create a transport node.
 gz::transport::Node t_node;
 
-// timeout used for services
-constexpr unsigned int timeout = 5000;
+int64_t gz_multi_step{500};
 
 void GetModelString(std::string &buffer, std::string model_path) {
     std::ifstream model_file(model_path);
@@ -35,15 +36,6 @@ void GetModelString(std::string &buffer, std::string model_path) {
     buffer.resize(model_file.tellg());
     model_file.seekg(0);
     model_file.read(buffer.data(), buffer.size());
-}
-
-// Signal handler function
-void signalHandler(int signum) {
-    std::cout << "\nInterrupt signal (" << signum << ") received.\n";
-
-    // Cleanup and close up stuff here
-    // Terminate program
-    is_terminated = true;
 }
 
 template <class Request, class Response>
@@ -115,27 +107,14 @@ bool StepServer() {
     gz::msgs::WorldControl req;
     gz::msgs::Boolean res;
 
-    req.set_pause(true);      // Keep paused after the request
-    req.set_step(true);       // Take a single step
-    req.set_multi_step(500);  // Run the simulation for 0.5s
-
-    if (is_crashed) {
-        req.mutable_reset()->set_model_only(true);
-        result = ResetModel();
-        is_crashed = false;
-    }
+    req.set_pause(true);                // Keep paused after the request
+    req.set_step(true);                 // Take a single step
+    req.set_multi_step(gz_multi_step);  // Run the simulation for 0.5s
 
     bool executed = SendRequest<gz::msgs::WorldControl, gz::msgs::Boolean>(
         service_name, req, res);
     return executed;
 }
-
-// TODO: Add function defintion
-void ProcessRequest(
-    const std::shared_ptr<nandhi_msg_types::srv::GetObservations::Request>
-        request,
-    std::shared_ptr<nandhi_msg_types::srv::GetObservations::Response>
-        response) {}
 
 void ONContact(const gz::msgs::Contacts &contacts) {
     if (!is_crashed) {
@@ -144,9 +123,35 @@ void ONContact(const gz::msgs::Contacts &contacts) {
     }
 }
 
+void ProcessRequest(
+    const std::shared_ptr<nandhi_msg_types::srv::GetObservations::Request>
+        request,
+    std::shared_ptr<nandhi_msg_types::srv::GetObservations::Response>
+        response) {
+    if (request->reset) {
+        bool result = ResetModel();
+        if (!result) {
+            std::cerr << "Failed to reset the model" << std::endl;
+
+        } else {
+            is_crashed = false;
+            std::cout << "Module reset done" << std::endl;
+        }
+    }
+    if (request->step) {
+        gz_multi_step = request->multi_step;
+        bool ret = StepServer();
+        if (!ret) {
+            std::cerr << "RL: Step failed" << std::endl;
+        }
+    }
+
+    response->crash = is_crashed;
+}
+
 int main(int argc, const char *const *argv) {
-    // Register signal handler for SIGINT
-    signal(SIGINT, signalHandler);
+    // Initialize the ros environment
+    rclcpp::init(argc, argv);
 
     // TODO : Get the path from arguments
 
@@ -159,6 +164,7 @@ int main(int argc, const char *const *argv) {
     createEntityFromStr(modelStr, "indoor");
     //! [create Nandhi entity]
 
+    //! [subscribe for contact sensor]
     std::string topic{
         "/world/indoor/model/nandhi/link/chassis/sensor/sensor_contact/"
         "contact"};
@@ -166,26 +172,27 @@ int main(int argc, const char *const *argv) {
     if (!ret) {
         std::cerr << "Failed to subscribe to contact sensor" << std::endl;
     }
+    //! [subscribe for contact sensor]
 
-    rclcpp::init(argc, argv);
+    //! [Create ros2 node]
     std::shared_ptr<rclcpp::Node> ros_node =
         rclcpp::Node::make_shared("ros_gz_rl");
+    //! [Create ros2 node]
+
+    //! [create ros2 service client]
     rclcpp::Service<nandhi_msg_types::srv::GetObservations>::SharedPtr service =
         ros_node->create_service<nandhi_msg_types::srv::GetObservations>(
             "ros_gz_rl", &ProcessRequest);
+    //! [create ros2 service client]
 
-    while (!is_terminated) {
-        bool ret = StepServer();
-        if (!ret) {
-            std::cerr << "RL: Step failed" << std::endl;
-        }
-        // rclcpp::spin(ros_node);
-        /* Until the ProcessRequest is implemented sleep for 1s, once it is
-         implemented the cycle can be adjusted or let it driven by the client.*/
-        std::this_thread::sleep_for(1000ms);
-    }
+    // Get the command from the ros
+    rclcpp::spin(ros_node);
 
+    // winding down ros environment
     rclcpp::shutdown();
+
+    // wait for GZ termination
+    gz::transport::waitForShutdown();
 
     std::cout << "Program terminated" << std::endl;
 
