@@ -102,3 +102,19 @@ max_angular_velocity = 47.9 rad/s
 - (L x W x H) 532 x 290 x 195 mm
 
 [Vehicle link](https://www.conrad.de/de/p/reely-eraser-brushless-1-10-rc-modellauto-elektro-short-course-allradantrieb-4wd-100-rtr-2-4-ghz-inkl-akku-ladeger-1976297.html#productTechData)
+
+
+## Help full commands
+
+Step through the gazebo server
+
+```bash
+ros2 service call /ros_gz_rl nandhi_msg_types/srv/GetObservations "{step: true, multi_step: 500}"
+```
+
+Move the robot
+```bash
+gz topic -t "/model/nandhi/cmd_vel" -m gz.msgs.Twist -p "linear: {x: 0.5}, angular: {z: 0.1}"
+# OR
+ros2 topic pub /nandhi/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.5}}"
+```
