@@ -1,4 +1,7 @@
+#include <gz/msgs/details/contacts.pb.h>
+#include <gz/msgs/details/world_reset.pb.h>
 #include <gz/msgs/entity_factory.pb.h>
+#include <gz/msgs/pose.pb.h>
 #include <gz/msgs/world_control.pb.h>
 #include <unistd.h>
 
@@ -17,6 +20,8 @@
 using namespace std::chrono_literals;
 
 bool is_terminated{false};
+
+bool is_crashed{false};
 
 // Create a transport node.
 gz::transport::Node t_node;
@@ -71,7 +76,41 @@ bool createEntityFromStr(const std::string &modelStr,
     return executed;
 }
 
+bool ResetModel() {
+    // Service client to call the set_pose service
+    bool result;
+    gz::msgs::Boolean res;
+    gz::msgs::Pose req;
+
+    // Model name and world name
+    std::string model_name = "nandhi";  // Replace with your model's name
+    std::string world_name =
+        "indoor";  // Replace with your world name if needed
+
+    // Set the model name
+    req.set_name(model_name);
+
+    // Set the desired position (x, y, z) and orientation (roll, pitch, yaw)
+    req.mutable_position()->set_x(0.0);  // Replace with desired x
+    req.mutable_position()->set_y(0.0);  // Replace with desired y
+    req.mutable_position()->set_z(0.5);  // Replace with desired z
+
+    // Request the service to set the model pose
+    std::string service_name = "/world/" + world_name + "/set_pose";
+    bool success =
+        SendRequest<gz::msgs::Pose, gz::msgs::Boolean>(service_name, req, res);
+
+    if (success && result) {
+        std::cout << "Pose set successfully." << std::endl;
+    } else {
+        std::cerr << "Failed to set pose." << std::endl;
+    }
+
+    return result;
+}
+
 bool StepServer() {
+    bool result{false};
     std::string service_name{"/world/indoor/control"};
     gz::msgs::WorldControl req;
     gz::msgs::Boolean res;
@@ -79,6 +118,12 @@ bool StepServer() {
     req.set_pause(true);      // Keep paused after the request
     req.set_step(true);       // Take a single step
     req.set_multi_step(500);  // Run the simulation for 0.5s
+
+    if (is_crashed) {
+        req.mutable_reset()->set_model_only(true);
+        result = ResetModel();
+        is_crashed = false;
+    }
 
     bool executed = SendRequest<gz::msgs::WorldControl, gz::msgs::Boolean>(
         service_name, req, res);
@@ -91,6 +136,13 @@ void ProcessRequest(
         request,
     std::shared_ptr<nandhi_msg_types::srv::GetObservations::Response>
         response) {}
+
+void ONContact(const gz::msgs::Contacts &contacts) {
+    if (!is_crashed) {
+        std::cout << "Crash detected " << contacts.contact_size() << std::endl;
+        is_crashed = true;
+    }
+}
 
 int main(int argc, const char *const *argv) {
     // Register signal handler for SIGINT
@@ -106,6 +158,14 @@ int main(int argc, const char *const *argv) {
 
     createEntityFromStr(modelStr, "indoor");
     //! [create Nandhi entity]
+
+    std::string topic{
+        "/world/indoor/model/nandhi/link/chassis/sensor/sensor_contact/"
+        "contact"};
+    bool ret = t_node.Subscribe(topic, ONContact);
+    if (!ret) {
+        std::cerr << "Failed to subscribe to contact sensor" << std::endl;
+    }
 
     rclcpp::init(argc, argv);
     std::shared_ptr<rclcpp::Node> ros_node =
