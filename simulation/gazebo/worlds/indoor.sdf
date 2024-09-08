@@ -25,6 +25,11 @@
       name="gz::sim::systems::UserCommands">
     </plugin>
 
+    <plugin
+      filename="gz-sim-contact-system"
+      name="gz::sim::systems::Contact">
+    </plugin>
+
     <light type="directional" name="sun">
       <cast_shadows>true</cast_shadows>
       <pose>0 0 10 0 0 0</pose>
@@ -102,6 +107,35 @@
       </link>
     </model>
 
+    <model name='wall_f_2'>
+      <static>true</static>
+      <pose>10 0 0 0 0 0</pose><!--pose
+      relative to the world-->
+      <link name='box'>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.5 20.0 2.0</size>
+            </box>
+          </geometry>
+          <!--let's
+          add color to our link-->
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+            <specular>0.0 0.0 1.0 1</specular>
+          </material>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.5 10.0 2.0</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
     <model name='wall_b'>
       <static>true</static>
       <pose>-5 0 0 0 0 0</pose><!--pose
@@ -111,6 +145,35 @@
           <geometry>
             <box>
               <size>0.5 10.0 2.0</size>
+            </box>
+          </geometry>
+          <!--let's
+          add color to our link-->
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+            <specular>0.0 0.0 1.0 1</specular>
+          </material>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.5 10.0 2.0</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <model name='wall_b_2'>
+      <static>true</static>
+      <pose>-10 0 0 0 0 0</pose><!--pose
+      relative to the world-->
+      <link name='box'>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.5 20.0 2.0</size>
             </box>
           </geometry>
           <!--let's
@@ -160,6 +223,35 @@
       </link>
     </model>
 
+    <model name='wall_c_2'>
+      <static>true</static>
+      <pose>0 10 0 0 0 1.5708</pose><!--pose
+      relative to the world-->
+      <link name='box'>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.5 20.0 2.0</size>
+            </box>
+          </geometry>
+          <!--let's
+          add color to our link-->
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+            <specular>0.0 0.0 1.0 1</specular>
+          </material>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.5 10.0 2.0</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
     <model name='wall_d'>
       <static>true</static>
       <pose>0 -5 0 0 0 1.5708</pose><!--pose
@@ -169,6 +261,35 @@
           <geometry>
             <box>
               <size>0.5 10.0 2.0</size>
+            </box>
+          </geometry>
+          <!--let's
+          add color to our link-->
+          <material>
+            <ambient>0.0 0.0 1.0 1</ambient>
+            <diffuse>0.0 0.0 1.0 1</diffuse>
+            <specular>0.0 0.0 1.0 1</specular>
+          </material>
+        </visual>
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>0.5 10.0 2.0</size>
+            </box>
+          </geometry>
+        </collision>
+      </link>
+    </model>
+
+    <model name='wall_d_2'>
+      <static>true</static>
+      <pose>0 -10 0 0 0 1.5708</pose><!--pose
+      relative to the world-->
+      <link name='box'>
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>0.5 20.0 2.0</size>
             </box>
           </geometry>
           <!--let's

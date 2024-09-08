@@ -1,104 +1,147 @@
-# Nandhi
 
-Autonomus vehicle(1:10) from scratch.
+# Nandhi: Autonomous Vehicle
 
-I am building an hobby vehicle with expectations to create a platfor to kick start the real life ML algorithums in action like Reinforcement learning.
+I am building a hobby autonomous vehicle (of 1:10 scale) to serve as a platform for implementing real-world Machine Learning algorithms, including Reinforcement Learning.
 
-I am aproching this task in below Phases fasion.
+This project is divided into several phases, each focused on different aspects of the system:
 
-### Phase I: (System)
+## Project Phases Overview
 
-1. Hardware integration
+### Phase I: System Setup and Hardware Integration
 
-- Assemble the Vehicle:
-  - Chassi
-  - Battery
-  - Vehicle contorller unit
-  - IMU sensor, 2D Lidar and a Camera
-  - HPC (Nvidia AGX Xavior)
+1. **Hardware Integration**
+   - Assemble the Vehicle:
+     - Chassis
+     - Battery
+     - Vehicle controller unit
+     - IMU sensor, 2D LiDAR, and a camera
+     - High-Performance Computer (HPC) — Nvidia AGX Xavier
 
-2. Wiring it up
-3. Power mangement (may be Ardino or I2C/USB device)
+2. **Wiring and Connectivity**
+   - Connect all components for data and power transmission.
 
-- Check the power riqierments
-- Monitor the power consumsion
-- Reposrt batery status and abnormalities
+3. **Power Management**
+   - Power management via Arduino or I2C/USB device:
+     - Check power requirements.
+     - Monitor power consumption.
+     - Report battery status and detect abnormalities.
 
-#### Phase II: (Simulation)
-1. Gazebo simulation
-2. 4wd ackerman steering
-3. Lidar
-4. camera
-5. Ros bridge
-6. RVIZ
+### Phase II: Simulation Environment
 
-#### Phase III: (Software)
+1. **Gazebo Simulation Setup**
+   - Simulate the vehicle in a controlled environment.
 
-1. Basic Vehicle drivers ROS2 nodes
+2. **4WD Ackerman Steering**
+   - Implement four-wheel-drive steering with Ackerman geometry.
 
-- Ego/Vehicle state node
-- YDLidar ROS2 node (using as is)
-- IMU sensor node
-- I2C wrapper for easy use
-- Vehicle Controler node
-- Keyboard listener node
-- Vehicle vizualisation node
+3. **Sensors Simulation**
+   - Simulate sensors including LiDAR and camera.
 
-2. Bring-up the perception
+4. **ROS Integration**
+   - ROS Bridge integration for connecting Gazebo to ROS.
 
-- Digital environment (2D Lidar + camera)
-- Vehicle state position and orientation(IMU + camera + Lidar).
+5. **Visualization with RViz**
+   - Visualize the vehicle and environment in RViz.
 
-3. The Driver
+### Phase III: Software Development
 
-- Vehicle pannnig and Behaviour
+1. **ROS2 Nodes for Vehicle Drivers**
+   - Develop ROS2 nodes for vehicle control:
+     - Ego/Vehicle State Node
+     - YDLidar ROS2 Node (using pre-existing implementations)
+     - IMU Sensor Node
+     - I2C Wrapper Node (for easy I2C integration)
+     - Vehicle Controller Node
+     - Keyboard Listener Node (for manual control)
+     - Vehicle Visualization Node (for RViz)
 
-  This is work in progress, Phase I.2 and Phase II.1 is complete.
-  #TODO: Add picture/video of curent state and discribe it more.
+2. **Perception System**
+   - Implement perception using:
+     - Digital environment data from 2D LiDAR and camera.
+     - Vehicle state estimation for position and orientation using IMU, camera, and LiDAR data.
 
+3. **Vehicle Planning and Behavior**
+   - Develop vehicle planning and behavior control (in progress).
 
-## Launch Nandhi
+_Current Progress: Phase I.2 and Phase II.1 are complete._  
+**TODO**: Add a picture/video of the current progress and describe it in more detail.
 
-To launch simulation
+---
+
+## How to Launch Nandhi
+
+### Simulation Setup
+
+To launch the simulation environment:
+
+1. In the first terminal (Shell A):
+
+   ```bash
+   source install/setup.bash
+   ros2 launch nandhi_sim_launch nandhi_sim.launch.py
+   ```
+
+2. To make the robot move, open a second terminal (Shell B) and use one of the following options:
+   - Using ROS2 topic publishing:
+
+     ```bash
+     ros2 topic pub /nandhi/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 5.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: -0.22}}"
+     ```
+
+   - Using the keyboard control node:
+
+     ```bash
+     ./install/key_to_twist/lib/key_to_twist/key_to_twist
+     ```
+
+3. To listen to the Twist value, open a third terminal (Shell C) and run the test binary:
+
+   ```bash
+   ./build/key_to_twist/key_to_twist_test
+   ```
+
+---
+
+## Nandhi Constants and Vehicle Specifications
+
+### Maximum Linear Velocity
+
+- Maximum speed: $50 \ \text{km/h}$
+- Wheel Diameter: $0.1 \ \text{m}$
+
+$$
+\text{max linear velocity} = 13.89 \ \text{m/s}
+$$
+
+### Maximum Angular Velocity
+
+- Wheel base $W = 0.29 \ \text{m}$
+
+$$
+\text{max angular velocity} = \frac{\text{max linear velocity}}{W} = 47.9 \ \text{rad/s}
+$$
+
+### RPM and Dimensions
+
+- 8500 RPM
+- Dimensions: $(L \times W \times H) = 532 \times 290 \times 195 \ \text{mm}$
+
+- [Vehicle Link](https://www.conrad.de/de/p/reely-eraser-brushless-1-10-rc-modellauto-elektro-short-course-allradantrieb-4wd-100-rtr-2-4-ghz-inkl-akku-ladeger-1976297.html#productTechData)
+
+---
+
+## Helpful Commands with gazebo simulation with ros2 bridge
+
+### Step Through the Gazebo Server
 
 ```bash
-# Shel A
-source install/setup.bash
-ros2 launch nandhi_sim_launch nandhi_sim.launch.py
+ros2 service call /ros_gz_rl nandhi_msg_types/srv/GetObservations "{step: true, multi_step: 500}"
 ```
 
+### Move the Robot
+
 ```bash
-# Shel B
-# To make robot move
-ros2 topic pub /nandhi/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 5.0, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: -0.22}}"
+gz topic -t "/model/nandhi/cmd_vel" -m gz.msgs.Twist -p "linear: {x: 0.5}, angular: {z: 0.1}"
 # OR
-./install/key_to_twist/lib/key_to_twist/key_to_twist
+ros2 topic pub /nandhi/cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.5}}"
 ```
-
-To listen the Twist value run below binary
-
-```bash
-# Shell C
-./build/key_to_twist/key_to_twist_test
-```
-
-
-## Nandhi constants
-
-**Maximum Linear Velocity**
-
-Maximu speed: 50 k/h
-Wheel Diameter: 0.1 m
-
-max_linear_velocity = 13.89 m/s
-
-**Maximum Angular Velocity**
-wheel base W: 0.29 m
-
-max_angular_velocity = max_linear_velocity/W
-max_angular_velocity = 47.9 rad/s
-
-- 8500 rpm
-- (L x W x H) 532 x 290 x 195 mm
-
-[Vehicle link](https://www.conrad.de/de/p/reely-eraser-brushless-1-10-rc-modellauto-elektro-short-course-allradantrieb-4wd-100-rtr-2-4-ghz-inkl-akku-ladeger-1976297.html#productTechData)

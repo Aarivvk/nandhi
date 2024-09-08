@@ -1,0 +1,8 @@
+# This service offers the action spaces as request and observation as response
+
+
+bool reset
+bool step
+int64 multi_step
+---
+bool crash

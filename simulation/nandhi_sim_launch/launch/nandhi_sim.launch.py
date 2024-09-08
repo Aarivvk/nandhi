@@ -30,7 +30,7 @@ def generate_launch_description():
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
-        launch_arguments={'gz_args': "-r " + os.path.join(
+        launch_arguments={'gz_args': '-r '+os.path.join(
             pkg_project_gazebo,
             'worlds',
             'indoor.sdf'
@@ -81,12 +81,17 @@ def generate_launch_description():
                 'topic': '/robot_description'}],
                 output='screen')
 
+    sim_control = Node(package='ros_gz_rl',
+                       executable='ros_gz_rl',
+                       output='screen')
+
     return LaunchDescription([
-        gz_sim,
-        DeclareLaunchArgument('rviz', default_value='true',
+        DeclareLaunchArgument('rviz', default_value='false',
                              description='Open RViz.'),
-        rviz,
+        gz_sim,
         bridge,
+        # spawn
+        sim_control,
         robot_state_publisher,
-        spawn
+        rviz
     ])
