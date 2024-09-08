@@ -23,6 +23,10 @@ using namespace std::chrono_literals;
 // timeout used for services
 constexpr unsigned int timeout = 5000;
 
+// Model name and world name
+std::string model_name = "nandhi";  // Replace with your model's name
+std::string world_name = "indoor";  // Replace with your world name if needed
+
 bool is_crashed{false};
 
 // Create a transport node.
@@ -74,11 +78,6 @@ bool ResetModel() {
     gz::msgs::Boolean res;
     gz::msgs::Pose req;
 
-    // Model name and world name
-    std::string model_name = "nandhi";  // Replace with your model's name
-    std::string world_name =
-        "indoor";  // Replace with your world name if needed
-
     // Set the model name
     req.set_name(model_name);
 
@@ -103,7 +102,7 @@ bool ResetModel() {
 
 bool StepServer() {
     bool result{false};
-    std::string service_name{"/world/indoor/control"};
+    std::string service_name{"/world/"+world_name+"/control"};
     gz::msgs::WorldControl req;
     gz::msgs::Boolean res;
 
@@ -159,14 +158,14 @@ int main(int argc, const char *const *argv) {
     std::string modelStr;
     GetModelString(modelStr,
                    "install/nandhi_description/share/"
-                   "nandhi_description/models/nandhi/model.sdf");
+                   "nandhi_description/models/"+model_name+"/model.sdf");
 
-    createEntityFromStr(modelStr, "indoor");
+    createEntityFromStr(modelStr, world_name);
     //! [create Nandhi entity]
 
     //! [subscribe for contact sensor]
     std::string topic{
-        "/world/indoor/model/nandhi/link/chassis/sensor/sensor_contact/"
+        "/world/"+world_name+"/model/"+model_name+"/link/chassis/sensor/sensor_contact/"
         "contact"};
     bool ret = t_node.Subscribe(topic, ONContact);
     if (!ret) {
