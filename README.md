@@ -25,6 +25,7 @@ I am aproching this task in below Phases fasion.
 - Reposrt batery status and abnormalities
 
 #### Phase II: (Simulation)
+
 1. Gazebo simulation
 2. 4wd ackerman steering
 3. Lidar
@@ -56,7 +57,6 @@ I am aproching this task in below Phases fasion.
   This is work in progress, Phase I.2 and Phase II.1 is complete.
   #TODO: Add picture/video of curent state and discribe it more.
 
-
 ## Launch Nandhi
 
 To launch simulation
@@ -82,17 +82,17 @@ To listen the Twist value run below binary
 ./build/key_to_twist/key_to_twist_test
 ```
 
-
 ## Nandhi constants
 
-**Maximum Linear Velocity**
+### Maximum Linear Velocity
 
-Maximu speed: 50 k/h
+Maximum speed: 50 k/h
 Wheel Diameter: 0.1 m
 
 max_linear_velocity = 13.89 m/s
 
-**Maximum Angular Velocity**
+### Maximum Angular Velocity
+
 wheel base W: 0.29 m
 
 max_angular_velocity = max_linear_velocity/W
@@ -103,7 +103,6 @@ max_angular_velocity = 47.9 rad/s
 
 [Vehicle link](https://www.conrad.de/de/p/reely-eraser-brushless-1-10-rc-modellauto-elektro-short-course-allradantrieb-4wd-100-rtr-2-4-ghz-inkl-akku-ladeger-1976297.html#productTechData)
 
-
 ## Help full commands
 
 Step through the gazebo server
@@ -113,6 +112,7 @@ ros2 service call /ros_gz_rl nandhi_msg_types/srv/GetObservations "{step: true, 
 ```
 
 Move the robot
+
 ```bash
 gz topic -t "/model/nandhi/cmd_vel" -m gz.msgs.Twist -p "linear: {x: 0.5}, angular: {z: 0.1}"
 # OR
