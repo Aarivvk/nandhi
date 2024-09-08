@@ -14,10 +14,10 @@
 <sdf version="1.8">
   <model name='nandhi'>
     <!-- Pose is not compatible with URDF format, so you do not see the box-->
-    <pose>0 0 0.5 0 0 0</pose>
+    <pose>-7 0 0.5 0 0 0</pose>
 
     <link name='chassis'>
-      <pose>-0.01 -0 0.025 0 0 0</pose>
+      <pose>-0.01 -0 0.025 0 0 90</pose>
       <inertial>
         <mass>3</mass>
         <inertia>
