@@ -106,7 +106,7 @@ To launch the simulation environment:
 
 ### Maximum Linear Velocity
 
-- Maximum speed: $50 \ \text{km/h}$  
+- Maximum speed: $50 \ \text{km/h}$
 - Wheel Diameter: $0.1 \ \text{m}$
 
 $$
@@ -123,7 +123,7 @@ $$
 
 ### RPM and Dimensions
 
-- 8500 RPM  
+- 8500 RPM
 - Dimensions: $(L \times W \times H) = 532 \times 290 \times 195 \ \text{mm}$
 
 - [Vehicle Link](https://www.conrad.de/de/p/reely-eraser-brushless-1-10-rc-modellauto-elektro-short-course-allradantrieb-4wd-100-rtr-2-4-ghz-inkl-akku-ladeger-1976297.html#productTechData)
