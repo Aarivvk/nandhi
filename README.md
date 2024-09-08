@@ -110,7 +110,7 @@ To launch the simulation environment:
 - Wheel Diameter: $0.1 \ \text{m}$
 
 $$
-\text{max\_linear\_velocity} = 13.89 \ \text{m/s}
+\text{max linear velocity} = 13.89 \ \text{m/s}
 $$
 
 ### Maximum Angular Velocity
@@ -118,7 +118,7 @@ $$
 - Wheel base $W = 0.29 \ \text{m}$
 
 $$
-\text{max\_angular\_velocity} = \frac{\text{max\_linear\_velocity}}{W} = 47.9 \ \text{rad/s}
+\text{max angular velocity} = \frac{\text{max linear velocity}}{W} = 47.9 \ \text{rad/s}
 $$
 
 ### RPM and Dimensions
