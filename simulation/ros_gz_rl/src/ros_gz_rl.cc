@@ -74,7 +74,6 @@ bool createEntityFromStr(const std::string &modelStr,
 
 bool ResetModel() {
     // Service client to call the set_pose service
-    bool result;
     gz::msgs::Boolean res;
     gz::msgs::Pose req;
 
@@ -82,7 +81,7 @@ bool ResetModel() {
     req.set_name(model_name);
 
     // Set the desired position (x, y, z) and orientation (roll, pitch, yaw)
-    req.mutable_position()->set_x(0.0);  // Replace with desired x
+    req.mutable_position()->set_x(-7);  // Replace with desired x
     req.mutable_position()->set_y(0.0);  // Replace with desired y
     req.mutable_position()->set_z(0.5);  // Replace with desired z
 
@@ -91,13 +90,13 @@ bool ResetModel() {
     bool success =
         SendRequest<gz::msgs::Pose, gz::msgs::Boolean>(service_name, req, res);
 
-    if (success && result) {
-        std::cout << "Pose set successfully." << std::endl;
+    if (success) {
+        std::cout << "Reset done successfully." << std::endl;
     } else {
-        std::cerr << "Failed to set pose." << std::endl;
+        std::cerr << "Failed to reset." << std::endl;
     }
 
-    return result;
+    return success;
 }
 
 bool StepServer() {
@@ -184,6 +183,7 @@ int main(int argc, const char *const *argv) {
             "ros_gz_rl", &ProcessRequest);
     //! [create ros2 service client]
 
+    ResetModel();
     // Get the command from the ros
     rclcpp::spin(ros_node);
 
