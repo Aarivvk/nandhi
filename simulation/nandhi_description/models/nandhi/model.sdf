@@ -13,79 +13,75 @@
 -->
 <sdf version="1.8">
   <model name='nandhi'>
-    <!-- Pose is not compatible with URDF format, so you do not see the box-->
-    <pose>-7 0 0.5 0 0 0</pose>
 
     <link name='chassis'>
-      <pose>-0.01 -0 0.025 0 0 90</pose>
       <inertial>
-        <mass>3</mass>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>3.0</mass>
         <inertia>
-          <ixx>0.126164</ixx>
+          <ixx>0.0054</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.416519</iyy>
+          <iyy>0.0252</iyy>
           <iyz>0</iyz>
-          <izz>0.481014</izz>
+          <izz>0.0252</izz>
         </inertia>
       </inertial>
-      <visual name='visual'>
+      <visual name="base_visual">
+        <pose>.1371 0 -.0115 -0.018 0 1.5707</pose>
         <geometry>
-          <box>
-            <size>0.532 0.29 0.195</size>
-          </box>
+          <mesh>
+            <uri>model://nandhi/meshes/BaseReduced.dae</uri>
+          </mesh>
         </geometry>
-        <material>
-          <ambient>0.5 0.5 1.0 1</ambient>
-          <diffuse>0.5 0.5 1.0 1</diffuse>
-          <specular>0.0 0.0 1.0 1</specular>
-        </material>
       </visual>
-      <collision name='collision'>
+      <visual name="top_visual">
+        <pose>.1371 0 -.0115 -0.018 0 1.5707</pose>
+        <geometry>
+          <mesh>
+            <uri>model://nandhi/meshes/TopReduced.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="collision">
+        <pose>0 0 .06 0 0 0</pose>
         <geometry>
           <box>
-            <size>0.732 0.39 0.195</size>
+            <size>.3 .09 .12</size>
           </box>
         </geometry>
       </collision>
-      <sensor name='sensor_contact' type='contact'>
-        <contact>
-          <collision>collision</collision>
-        </contact>
-      </sensor>
     </link>
 
     <link name='front_left_wheel'>
-      <pose>0.266 0.185 -0.05 -1.5707 0 0</pose>
+      <pose relative_to="front_left_wheel_joint">0 0 0 0 0 0</pose>
       <inertial>
-        <mass>2</mass>
+        <mass>.05</mass>
         <inertia>
-          <ixx>0.145833</ixx>
+          <ixx>0.00003331</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.145833</iyy>
+          <iyy>0.0000204</iyy>
           <iyz>0</iyz>
-          <izz>0.125</izz>
+          <izz>0.0000204</izz>
         </inertia>
       </inertial>
-      <visual name='visual'>
+      <gravity>true</gravity>
+      <velocity_decay />
+      <visual name="front_left_wheel_visual">
+        <pose>0 0 0 0 0 3.14159</pose>
         <geometry>
-          <cylinder>
-            <length>0.04</length>
-            <radius>0.05</radius>
-          </cylinder>
+          <mesh>
+            <uri>model://nandhi/meshes/Wheel.dae</uri>
+          </mesh>
         </geometry>
-        <material>
-          <ambient>0.2 0.2 0.2 1</ambient>
-          <diffuse>0.2 0.2 0.2 1</diffuse>
-          <specular>0.2 0.2 0.2 1</specular>
-        </material>
       </visual>
-      <collision name='collision'>
+      <collision name="front_left_wheel_collision">
+        <pose>0 -.015 0 -1.5707 0 0</pose>
         <geometry>
           <cylinder>
-            <length>0.04</length>
-            <radius>0.05</radius>
+            <length>0.03</length>
+            <radius>0.0365</radius>
           </cylinder>
         </geometry>
         <surface>
@@ -95,47 +91,40 @@
               <mu2>1.0</mu2>
               <fdir1>0 0 1</fdir1>
             </ode>
-            <bullet>
-              <friction>0.5</friction>
-              <friction2>1</friction2>
-              <rolling_friction>0.1</rolling_friction>
-            </bullet>
           </friction>
         </surface>
       </collision>
     </link>
 
     <link name='rear_left_wheel'>
-      <pose>-0.266 0.185 -0.05 -1.5707 0 0</pose>
+      <pose relative_to="rear_left_wheel_joint">0 0 0 0 0 0</pose>
       <inertial>
-        <mass>2</mass>
+        <mass>.05</mass>
         <inertia>
-          <ixx>0.145833</ixx>
+          <ixx>0.00003331</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.145833</iyy>
+          <iyy>0.0000204</iyy>
           <iyz>0</iyz>
-          <izz>0.125</izz>
+          <izz>0.0000204</izz>
         </inertia>
       </inertial>
-      <visual name='visual'>
+      <gravity>true</gravity>
+      <velocity_decay />
+      <visual name="rear_left_wheel_visual">
+        <pose>0 0 0 0 0 3.14159</pose>
         <geometry>
-          <cylinder>
-            <length>0.04</length>
-            <radius>0.05</radius>
-          </cylinder>
+          <mesh>
+            <uri>model://nandhi/meshes/Wheel.dae</uri>
+          </mesh>
         </geometry>
-        <material>
-          <ambient>0.2 0.2 0.2 1</ambient>
-          <diffuse>0.2 0.2 0.2 1</diffuse>
-          <specular>0.2 0.2 0.2 1</specular>
-        </material>
       </visual>
-      <collision name='collision'>
+      <collision name="rear_left_wheel_collision">
+        <pose>0 -.015 0 -1.5707 0 0</pose>
         <geometry>
           <cylinder>
-            <length>0.04</length>
-            <radius>0.05</radius>
+            <length>0.03</length>
+            <radius>0.0365</radius>
           </cylinder>
         </geometry>
         <surface>
@@ -145,47 +134,40 @@
               <mu2>1.0</mu2>
               <fdir1>0 0 1</fdir1>
             </ode>
-            <bullet>
-              <friction>0.5</friction>
-              <friction2>1</friction2>
-              <rolling_friction>0.5</rolling_friction>
-            </bullet>
           </friction>
         </surface>
       </collision>
     </link>
 
     <link name='front_right_wheel'>
-      <pose>0.266 -0.185 -0.05 -1.5707 0 0</pose>
+      <pose relative_to="front_right_wheel_joint">0 0 0 0 0 0</pose>
       <inertial>
-        <mass>2</mass>
+        <mass>.05</mass>
         <inertia>
-          <ixx>0.145833</ixx>
+          <ixx>0.00003331</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.145833</iyy>
+          <iyy>0.0000204</iyy>
           <iyz>0</iyz>
-          <izz>0.125</izz>
+          <izz>0.0000204</izz>
         </inertia>
       </inertial>
-      <visual name='visual'>
+      <gravity>true</gravity>
+      <velocity_decay />
+      <visual name="front_right_wheel_visual">
+        <pose>0 0 0 0 0 0</pose>
         <geometry>
-          <cylinder>
-            <length>0.04</length>
-            <radius>0.05</radius>
-          </cylinder>
+          <mesh>
+            <uri>model://nandhi/meshes/Wheel.dae</uri>
+          </mesh>
         </geometry>
-        <material>
-          <ambient>0.2 0.2 0.2 1</ambient>
-          <diffuse>0.2 0.2 0.2 1</diffuse>
-          <specular>0.2 0.2 0.2 1</specular>
-        </material>
       </visual>
-      <collision name='collision'>
+      <collision name="front_right_wheel_collision">
+        <pose>0 .015 0 -1.5707 0 0</pose>
         <geometry>
           <cylinder>
-            <length>0.04</length>
-            <radius>0.05</radius>
+            <length>0.03</length>
+            <radius>0.0365</radius>
           </cylinder>
         </geometry>
         <surface>
@@ -195,47 +177,40 @@
               <mu2>1.0</mu2>
               <fdir1>0 0 1</fdir1>
             </ode>
-            <bullet>
-              <friction>0.5</friction>
-              <friction2>1</friction2>
-              <rolling_friction>0.1</rolling_friction>
-            </bullet>
           </friction>
         </surface>
       </collision>
     </link>
 
     <link name='rear_right_wheel'>
-      <pose>-0.266 -0.185 -0.05 -1.5707 0 0</pose>
+      <pose relative_to="rear_right_wheel_joint">0 0 0 0 0 0</pose>
       <inertial>
-        <mass>2</mass>
+        <mass>.05</mass>
         <inertia>
-          <ixx>0.145833</ixx>
+          <ixx>0.00003331</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.145833</iyy>
+          <iyy>0.0000204</iyy>
           <iyz>0</iyz>
-          <izz>0.125</izz>
+          <izz>0.0000204</izz>
         </inertia>
       </inertial>
-      <visual name='visual'>
+      <gravity>true</gravity>
+      <velocity_decay />
+      <visual name="rear_right_wheel_visual">
+        <pose>0 0 0 0 0 0</pose>
         <geometry>
-          <cylinder>
-            <length>0.04</length>
-            <radius>0.05</radius>
-          </cylinder>
+          <mesh>
+            <uri>model://nandhi/meshes/Wheel.dae</uri>
+          </mesh>
         </geometry>
-        <material>
-          <ambient>0.2 0.2 0.2 1</ambient>
-          <diffuse>0.2 0.2 0.2 1</diffuse>
-          <specular>0.2 0.2 0.2 1</specular>
-        </material>
       </visual>
-      <collision name='collision'>
+      <collision name="rear_right_wheel_collision">
+        <pose>0 .015 0 -1.5707 0 0</pose>
         <geometry>
           <cylinder>
-            <length>0.04</length>
-            <radius>0.05</radius>
+            <length>0.03</length>
+            <radius>0.0365</radius>
           </cylinder>
         </geometry>
         <surface>
@@ -245,182 +220,138 @@
               <mu2>1.0</mu2>
               <fdir1>0 0 1</fdir1>
             </ode>
-            <bullet>
-              <friction>0.5</friction>
-              <friction2>1</friction2>
-              <rolling_friction>0.5</rolling_friction>
-            </bullet>
           </friction>
         </surface>
       </collision>
     </link>
 
     <link name="front_left_wheel_steering_link">
-      <pose>0.25 0.145 -0.05 0 0 0</pose>
+      <pose relative_to="front_left_wheel_steering_joint">0 0 0 0 0 0</pose>
       <inertial>
-        <mass>0.05</mass>
+        <mass>0.005</mass>
         <inertia>
-          <ixx>0.0153</ixx>
-          <iyy>0.025</iyy>
-          <izz>0.0153</izz>
+          <ixx>0.0000018</ixx>
+          <iyy>0.0000018</iyy>
+          <izz>0.0000018</izz>
         </inertia>
       </inertial>
-      <visual name="steering_link_visual">
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <cylinder>
-            <length>0.02</length>
-            <radius>0.02</radius>
-          </cylinder>
-        </geometry>
-        <material>
-          <ambient>1 1 1</ambient>
-          <diffuse>1 1 1</diffuse>
-        </material>
-      </visual>
     </link>
 
     <link name="front_right_wheel_steering_link">
-      <pose>0.25 -0.145 -0.05 0 0 0</pose>
+      <pose relative_to="front_right_wheel_steering_joint">0 0 0 0 0 0</pose>
       <inertial>
-        <mass>0.05</mass>
+        <mass>0.005</mass>
         <inertia>
-          <ixx>0.0153</ixx>
-          <iyy>0.025</iyy>
-          <izz>0.0153</izz>
+          <ixx>0.0000018</ixx>
+          <iyy>0.0000018</iyy>
+          <izz>0.0000018</izz>
         </inertia>
       </inertial>
-      <visual name="steering_link_visual">
-        <pose>0 0 0 0 0 0</pose>
-        <geometry>
-          <cylinder>
-            <length>0.02</length>
-            <radius>0.02</radius>
-          </cylinder>
-        </geometry>
-        <material>
-          <ambient>1 1 1</ambient>
-          <diffuse>1 1 1</diffuse>
-        </material>
-      </visual>
     </link>
 
     <joint name="front_left_wheel_steering_joint" type="revolute">
-      <child>front_left_wheel_steering_link</child>
       <parent>chassis</parent>
+      <child>front_left_wheel_steering_link</child>
+      <pose relative_to="chassis">.112 .10 0 0 0 0</pose>
       <axis>
         <xyz>0 0 1</xyz>
         <limit>
           <lower>-0.6</lower>
-          <upper>+0.6</upper>
+          <upper>0.6</upper>
           <velocity>1.0</velocity>
           <effort>25</effort>
         </limit>
+        <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
 
     <joint name="front_right_wheel_steering_joint" type="revolute">
       <parent>chassis</parent>
       <child>front_right_wheel_steering_link</child>
+      <pose relative_to="chassis">.112 -.10 0 0 0 0</pose>
       <axis>
         <xyz>0 0 1</xyz>
         <limit>
           <lower>-0.6</lower>
-          <upper>+0.6</upper>
+          <upper>0.6</upper>
           <velocity>1.0</velocity>
           <effort>25</effort>
         </limit>
+        <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
 
     <joint name='front_left_wheel_joint' type='revolute'>
       <parent>front_left_wheel_steering_link</parent>
       <child>front_left_wheel</child>
+      <pose relative_to="front_left_wheel_steering_joint">0 0 0 0 0 0</pose>
       <axis>
-        <xyz>0 0 1</xyz>
+        <xyz>0 1 0</xyz>
         <limit>
           <lower>-1.79769e+308</lower>
           <upper>1.79769e+308</upper>
         </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
 
     <joint name='front_right_wheel_joint' type='revolute'>
       <parent>front_right_wheel_steering_link</parent>
       <child>front_right_wheel</child>
+      <pose relative_to="front_right_wheel_steering_joint">0 0 0 0 0 0</pose>
       <axis>
-        <xyz>0 0 1</xyz>
+        <xyz>0 1 0</xyz>
         <limit>
           <lower>-1.79769e+308</lower>
           <upper>1.79769e+308</upper>
         </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
 
     <joint name='rear_left_wheel_joint' type='revolute'>
       <parent>chassis</parent>
       <child>rear_left_wheel</child>
+      <pose relative_to="chassis">-.1135 .10 0 0 0 0</pose>
       <axis>
-        <xyz>0 0 1</xyz>
+        <xyz>0 1 0</xyz>
         <limit>
           <lower>-1.79769e+308</lower>
           <upper>1.79769e+308</upper>
         </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
 
     <joint name='rear_right_wheel_joint' type='revolute'>
       <parent>chassis</parent>
       <child>rear_right_wheel</child>
+      <pose relative_to="chassis">-.1135 -.10 0 0 0 0</pose>
       <axis>
-        <xyz>0 0 1</xyz>
+        <xyz>0 1 0</xyz>
         <limit>
           <lower>-1.79769e+308</lower>
           <upper>1.79769e+308</upper>
         </limit>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+        </dynamics>
+        <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
-
-    <plugin
-      filename="gz-sim-joint-state-publisher-system"
-      name="gz::sim::systems::JointStatePublisher">
-    </plugin>
-
-    <plugin
-      filename="gz-sim-pose-publisher-system"
-      name="gz::sim::systems::PosePublisher">
-      <publish_link_pose>true</publish_link_pose>
-      <use_pose_vector_msg>true</use_pose_vector_msg>
-      <static_publisher>true</static_publisher>
-      <static_update_frequency>1</static_update_frequency>
-    </plugin>
-
-    <plugin
-      filename="gz-sim-odometry-publisher-system"
-      name="gz::sim::systems::OdometryPublisher">
-      <odom_frame>nandhi/odom</odom_frame>
-      <robot_base_frame>nandhi</robot_base_frame>
-    </plugin>
-
-    <plugin
-      filename="gz-sim-ackermann-steering-system"
-      name="gz::sim::systems::AckermannSteering">
-      <left_joint>front_left_wheel_joint</left_joint>
-      <left_joint>rear_left_wheel_joint</left_joint>
-      <right_joint>front_right_wheel_joint</right_joint>
-      <right_joint>rear_right_wheel_joint</right_joint>
-      <left_steering_joint>front_left_wheel_steering_joint</left_steering_joint>
-      <right_steering_joint>front_right_wheel_steering_joint</right_steering_joint>
-      <kingpin_width>1.0</kingpin_width>
-      <steering_limit>0.5235988</steering_limit>
-      <wheel_base>0.29</wheel_base>
-      <wheel_separation>0.532</wheel_separation>
-      <wheel_radius>0.05</wheel_radius>
-      <min_velocity>-13.89</min_velocity>
-      <max_velocity>13.89</max_velocity>
-      <min_acceleration>-3</min_acceleration>
-      <max_acceleration>3</max_acceleration>
-    </plugin>
 
     <!-- Below is sensor setup -->
 
@@ -483,7 +414,6 @@
       <child>lidar_link</child>
     </joint>
 
-
     <link name="camera_link">
       <pose>0.245 0 0.125 0 0 0</pose>
       <inertial>
@@ -532,6 +462,39 @@
       <child>camera_link</child>
     </joint>
 
+    <plugin
+      filename="gz-sim-joint-state-publisher-system"
+      name="gz::sim::systems::JointStatePublisher">
+    </plugin>
+
+    <plugin
+      filename="gz-sim-pose-publisher-system"
+      name="gz::sim::systems::PosePublisher">
+      <publish_link_pose>true</publish_link_pose>
+      <use_pose_vector_msg>true</use_pose_vector_msg>
+      <static_publisher>true</static_publisher>
+      <static_update_frequency>1</static_update_frequency>
+    </plugin>
+
+    <plugin
+      filename="gz-sim-ackermann-steering-system"
+      name="gz::sim::systems::AckermannSteering">
+      <left_joint>front_left_wheel_joint</left_joint>
+      <left_joint>rear_left_wheel_joint</left_joint>
+      <right_joint>front_right_wheel_joint</right_joint>
+      <right_joint>rear_right_wheel_joint</right_joint>
+      <left_steering_joint>front_left_wheel_steering_joint</left_steering_joint>
+      <right_steering_joint>front_right_wheel_steering_joint</right_steering_joint>
+      <kingpin_width>.18</kingpin_width>
+      <steering_limit>0.5</steering_limit>
+      <wheel_base>.2255</wheel_base>
+      <wheel_separation>.2</wheel_separation>
+      <wheel_radius>0.0365</wheel_radius>
+      <min_velocity>-100</min_velocity>
+      <max_velocity>100</max_velocity>
+      <min_acceleration>-5</min_acceleration>
+      <max_acceleration>5</max_acceleration>
+    </plugin>
   </model>
 
 </sdf>

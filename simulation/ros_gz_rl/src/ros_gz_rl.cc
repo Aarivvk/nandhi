@@ -25,7 +25,7 @@ constexpr unsigned int timeout = 5000;
 
 // Model name and world name
 std::string model_name = "nandhi";  // Replace with your model's name
-std::string world_name = "indoor";  // Replace with your world name if needed
+std::string world_name = "vk";  // Replace with your world name if needed
 
 bool is_crashed{false};
 
@@ -81,7 +81,7 @@ bool ResetModel() {
     req.set_name(model_name);
 
     // Set the desired position (x, y, z) and orientation (roll, pitch, yaw)
-    req.mutable_position()->set_x(-7);  // Replace with desired x
+    req.mutable_position()->set_x(0.0);  // Replace with desired x
     req.mutable_position()->set_y(0.0);  // Replace with desired y
     req.mutable_position()->set_z(0.5);  // Replace with desired z
 
