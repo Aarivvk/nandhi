@@ -132,6 +132,16 @@ $$
 
 ## Helpful Commands with gazebo simulation with ros2 bridge
 
+### Setup the environment
+
+```bash
+# To enable the local models
+# TODO: add it in the launch file
+export GZ_SIM_RESOURCE_PATH=~/project/ros_ws/src/nandhi/simulation/nandhi_description/models/:$GZ_SIM_RESOURCE_PATH
+# This need for remote desktop, where the display server is set to 10
+export DISPLAY=:10.0
+```
+
 ### Step Through the Gazebo Server
 
 ```bash
