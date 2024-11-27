@@ -8,7 +8,7 @@
   <license>MIT</license>
 
   <depend>rclcpp</depend>
-  <depend>nandhi_msg_types</depend>
+  <depend>geometry_msgs</depend>
   <depend>i2c_pwm_pca9685</depend>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

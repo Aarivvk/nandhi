@@ -79,7 +79,7 @@ TwistPublisher::TwistPublisher(/* args */) : Node("key_to_twist") {
   m_publisher =
       this->create_publisher<geometry_msgs::msg::Twist>("/nandhi/cmd_vel", 10);
   m_timer = this->create_wall_timer(
-      50ms, std::bind(&TwistPublisher::timer_callback, this));
+      150ms, std::bind(&TwistPublisher::timer_callback, this));
 }
 
 void TwistPublisher::timer_callback() {
@@ -111,8 +111,8 @@ int main(int argc, char *argv[]) {
 
   // Min pulse length out of 4096
   // Max pulse length out of 4096
-  constexpr int speed_inc = 1;
-  constexpr int steering_inc = 1;
+  constexpr int speed_inc = 5;
+  constexpr int steering_inc = 5;
 
   constexpr double range = 100;
 

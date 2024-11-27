@@ -16,7 +16,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(i2c_pwm_pca9685 REQUIRED)
-find_package(nandhi_msg_types REQUIRED)
+find_package(geometry_msgs REQUIRED)
 
 set(SRCS "src/vcs.cc")
 add_executable(${PROJECT_NAME} ${SRCS})
@@ -27,19 +27,19 @@ ament_target_dependencies(${PROJECT_NAME}
   rclcpp
   i2c_pwm_pca9685
   i2c_com
-  nandhi_msg_types
+  geometry_msgs
 )
 
 # Testing the PCA9685 moduel.
-# enable_testing()
-# add_executable(${PROJECT_NAME}_test test/test_vcs.cc)
-# ament_target_dependencies(${PROJECT_NAME}_test 
-#   rclcpp
-#   i2c_pwm_pca9685
-#   i2c_com
-#   nandhi_msg_types
-# )
-# add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}_test)
+enable_testing()
+add_executable(${PROJECT_NAME}_test test/test_vcs.cc)
+ament_target_dependencies(${PROJECT_NAME}_test 
+  rclcpp
+  i2c_pwm_pca9685
+  i2c_com
+  geometry_msgs
+)
+add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME}_test)
 
 
 install(
