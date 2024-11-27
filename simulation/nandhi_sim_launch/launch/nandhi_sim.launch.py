@@ -21,11 +21,6 @@ def generate_launch_description():
     pkg_project_description = get_package_share_directory('nandhi_description')
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
-    # Load the SDF file from "description" package
-    sdf_file  =  os.path.join(pkg_project_description, 'models', 'nandhi', 'model.sdf')
-    with open(sdf_file, 'r') as infp:
-        robot_desc = infp.read()
-
     # Setup to launch the simulator and Gazebo world
     gz_sim = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
@@ -38,6 +33,10 @@ def generate_launch_description():
         )}.items(),
     )
 
+    # Load the SDF file from "description" package
+    sdf_file  =  os.path.join(pkg_project_description, 'models', 'nandhi', 'model.sdf')
+    with open(sdf_file, 'r') as f:
+        robot_description = f.read()
     # Takes the description and joint angles as inputs and publishes the 3D poses of the robot links
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -46,12 +45,12 @@ def generate_launch_description():
         output='both',
         parameters=[
             {'use_sim_time': True},
-            {'robot_description': robot_desc},
+            {'robot_description': robot_description},
         ]
     )
 
     # Visualize in RViz
-    rviz = Node(
+    rviz2 = Node(
        package='rviz2',
        executable='rviz2',
        arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'nandhi_sim.rviz')],
@@ -62,7 +61,7 @@ def generate_launch_description():
     )
 
     # Bridge ROS topics and Gazebo messages for establishing communication
-    bridge = Node(
+    ros_gz_bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
         parameters=[{
@@ -82,7 +81,7 @@ def generate_launch_description():
                 'topic': '/robot_description'}],
                 output='screen')
 
-    sim_control = Node(package='ros_gz_rl',
+    ros_gz_rl = Node(package='ros_gz_rl',
                        executable='ros_gz_rl',
                        output='screen')
 
@@ -90,9 +89,9 @@ def generate_launch_description():
         DeclareLaunchArgument('rviz', default_value='false',
                              description='Open RViz.'),
         gz_sim,
-        bridge,
+        ros_gz_bridge,
         # spawn
-        sim_control,
+        ros_gz_rl,
         robot_state_publisher,
-        rviz
+        rviz2
     ])
