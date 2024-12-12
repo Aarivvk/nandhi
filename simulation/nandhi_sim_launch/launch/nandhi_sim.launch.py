@@ -26,7 +26,7 @@ def generate_launch_description():
         PythonLaunchDescriptionSource(
             os.path.join(pkg_ros_gz_sim, 'launch', 'gz_sim.launch.py')),
         # TODO : Remove the -r as not to start the simulator as it will be started by ros_gz_rl
-        launch_arguments={'gz_args': '-r -s '+os.path.join(
+        launch_arguments={'gz_args': '-s -r -v 3 '+os.path.join(
             pkg_project_gazebo,
             'worlds',
             'industrial-warehouse.sdf'

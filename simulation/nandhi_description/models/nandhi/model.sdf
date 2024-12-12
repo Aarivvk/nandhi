@@ -528,6 +528,11 @@
       <min_acceleration>-5</min_acceleration>
       <max_acceleration>5</max_acceleration>
     </plugin>
+    
+    <plugin filename="distance" name="nandhi::Distance">
+    <target_model>target</target_model>
+    <topic>/model/nandhi/distance</topic>
+    </plugin>
   </model>
 
 </sdf>
