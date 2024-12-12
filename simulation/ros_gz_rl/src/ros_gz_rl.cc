@@ -1,4 +1,5 @@
 #include <gz/msgs/details/contacts.pb.h>
+#include <gz/msgs/details/float.pb.h>
 #include <gz/msgs/details/world_reset.pb.h>
 #include <gz/msgs/entity_factory.pb.h>
 #include <gz/msgs/pose.pb.h>
@@ -24,10 +25,12 @@ using namespace std::chrono_literals;
 constexpr unsigned int timeout = 5000;
 
 // Model name and world name
-std::string model_name = "nandhi";  // Replace with your model's name
+std::string robot_name = "nandhi";  // Replace with your model's name
 std::string world_name = "vk";  // Replace with your world name if needed
+std::string target_name = "target";
 
 bool is_crashed{false};
+float distance_{0.0};
 
 // Create a transport node.
 gz::transport::Node t_node;
@@ -72,7 +75,7 @@ bool createEntityFromStr(const std::string &modelStr,
     return executed;
 }
 
-bool ResetModel() {
+bool ResetModel(std::string model_name=robot_name, float x=0.0, float y=0.0, float z=0.5) {
     // Service client to call the set_pose service
     gz::msgs::Boolean res;
     gz::msgs::Pose req;
@@ -81,9 +84,9 @@ bool ResetModel() {
     req.set_name(model_name);
 
     // Set the desired position (x, y, z) and orientation (roll, pitch, yaw)
-    req.mutable_position()->set_x(0.0);  // Replace with desired x
-    req.mutable_position()->set_y(0.0);  // Replace with desired y
-    req.mutable_position()->set_z(0.5);  // Replace with desired z
+    req.mutable_position()->set_x(x);  // Replace with desired x
+    req.mutable_position()->set_y(y);  // Replace with desired y
+    req.mutable_position()->set_z(z);  // Replace with desired z
 
     // Request the service to set the model pose
     std::string service_name = "/world/" + world_name + "/set_pose";
@@ -114,7 +117,7 @@ bool StepServer() {
     return executed;
 }
 
-void ONContact(const gz::msgs::Contacts &contacts) {
+void OnContact(const gz::msgs::Contacts &contacts) {
     if (!is_crashed) {
         std::cout << "Crash detected " << contacts.contact_size() << std::endl;
         is_crashed = true;
@@ -157,16 +160,22 @@ int main(int argc, const char *const *argv) {
     std::string modelStr;
     GetModelString(modelStr,
                    "install/nandhi_description/share/"
-                   "nandhi_description/models/"+model_name+"/model.sdf");
+                   "nandhi_description/models/"+robot_name+"/model.sdf");
+
+    createEntityFromStr(modelStr, world_name);
+
+    GetModelString(modelStr,
+                   "install/nandhi_description/share/"
+                   "nandhi_description/models/"+target_name+"/model.sdf");
 
     createEntityFromStr(modelStr, world_name);
     //! [create Nandhi entity]
 
     //! [subscribe for contact sensor]
     std::string topic{
-        "/world/"+world_name+"/model/"+model_name+"/link/chassis/sensor/sensor_contact/"
+        "/world/"+world_name+"/model/"+robot_name+"/link/chassis/sensor/sensor_contact/"
         "contact"};
-    bool ret = t_node.Subscribe(topic, ONContact);
+    bool ret = t_node.Subscribe(topic, OnContact);
     if (!ret) {
         std::cerr << "Failed to subscribe to contact sensor" << std::endl;
     }
@@ -184,6 +193,7 @@ int main(int argc, const char *const *argv) {
     //! [create ros2 service client]
 
     ResetModel();
+    ResetModel(target_name, 2.0, 2.0, 0.5);
     // Get the command from the ros
     rclcpp::spin(ros_node);
 

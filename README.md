@@ -138,6 +138,8 @@ $$
 # To enable the local models
 # TODO: add it in the launch file
 export GZ_SIM_RESOURCE_PATH=~/project/ros_ws/src/nandhi/simulation/nandhi_description/models/:$GZ_SIM_RESOURCE_PATH
+# For gazebo plugins shared library, from root of colcon workspace
+export GZ_SIM_SYSTEM_PLUGIN_PATH=`pwd`/build/distance
 # This need for remote desktop, where the display server is set to 10
 export DISPLAY=:10.0
 ```
