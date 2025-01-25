@@ -3,6 +3,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
+from launch.actions import SetEnvironmentVariable
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
 from launch.conditions import IfCondition
@@ -86,6 +87,20 @@ def generate_launch_description():
                        output='screen')
 
     return LaunchDescription([
+        # Set GZ_SIM_RESOURCE_PATH
+        SetEnvironmentVariable(
+            name='GZ_SIM_RESOURCE_PATH',
+            value=os.path.expanduser('~/project/ros_ws/src/nandhi/simulation/nandhi_description/models/') +
+                  ':' + 
+                  os.environ.get('GZ_SIM_RESOURCE_PATH', '')
+        ),
+
+        # Set GZ_SIM_SYSTEM_PLUGIN_PATH
+        SetEnvironmentVariable(
+            name='GZ_SIM_SYSTEM_PLUGIN_PATH',
+            value=os.path.join(os.getcwd(), 'build/distance')
+        ),
+
         DeclareLaunchArgument('rviz', default_value='false',
                              description='Open RViz.'),
         gz_sim,
