@@ -157,6 +157,8 @@ int main(int argc, const char *const *argv) {
 
     // TODO : Get the path from arguments
 
+    // TODO : Wait for the Gazebo server to start and time out after 5 seconds
+
     //! [create Nandhi entity]
     std::string modelStr;
     GetModelString(modelStr,
