@@ -26,7 +26,7 @@ constexpr unsigned int timeout = 5000;
 
 // Model name and world name
 std::string robot_name = "nandhi";  // Replace with your model's name
-std::string world_name = "vk";  // Replace with your world name if needed
+std::string world_name = "vk";      // Replace with your world name if needed
 std::string target_name = "target";
 
 bool is_crashed{false};
@@ -75,7 +75,8 @@ bool createEntityFromStr(const std::string &modelStr,
     return executed;
 }
 
-bool ResetModel(std::string model_name=robot_name, float x=0.0, float y=0.0, float z=0.5) {
+bool ResetModel(std::string model_name = robot_name, float x = 0.0,
+                float y = 0.0, float z = 0.5) {
     // Service client to call the set_pose service
     gz::msgs::Boolean res;
     gz::msgs::Pose req;
@@ -104,7 +105,7 @@ bool ResetModel(std::string model_name=robot_name, float x=0.0, float y=0.0, flo
 
 bool StepServer() {
     bool result{false};
-    std::string service_name{"/world/"+world_name+"/control"};
+    std::string service_name{"/world/" + world_name + "/control"};
     gz::msgs::WorldControl req;
     gz::msgs::Boolean res;
 
@@ -160,22 +161,31 @@ int main(int argc, const char *const *argv) {
     std::string modelStr;
     GetModelString(modelStr,
                    "install/nandhi_description/share/"
-                   "nandhi_description/models/"+robot_name+"/model.sdf");
+                   "nandhi_description/models/" +
+                       robot_name + "/model.sdf");
 
-    createEntityFromStr(modelStr, world_name);
+    bool ret = createEntityFromStr(modelStr, world_name);
+
+    if (!ret) {
+        std::cerr << "Failed to create " << robot_name << std::endl;
+    }
 
     GetModelString(modelStr,
                    "install/nandhi_description/share/"
-                   "nandhi_description/models/"+target_name+"/model.sdf");
+                   "nandhi_description/models/" +
+                       target_name + "/model.sdf");
 
-    createEntityFromStr(modelStr, world_name);
+    ret = createEntityFromStr(modelStr, world_name);
+    if (!ret) {
+        std::cerr << "Failed to create " << target_name << std::endl;
+    }
     //! [create Nandhi entity]
 
     //! [subscribe for contact sensor]
-    std::string topic{
-        "/world/"+world_name+"/model/"+robot_name+"/link/chassis/sensor/sensor_contact/"
-        "contact"};
-    bool ret = t_node.Subscribe(topic, OnContact);
+    std::string topic{"/world/" + world_name + "/model/" + robot_name +
+                      "/link/chassis/sensor/sensor_contact/"
+                      "contact"};
+    ret = t_node.Subscribe(topic, OnContact);
     if (!ret) {
         std::cerr << "Failed to subscribe to contact sensor" << std::endl;
     }
