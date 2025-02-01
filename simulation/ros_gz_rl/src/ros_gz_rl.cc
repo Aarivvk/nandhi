@@ -1,4 +1,5 @@
 #include <gz/msgs/details/contacts.pb.h>
+#include <gz/msgs/details/double.pb.h>
 #include <gz/msgs/details/float.pb.h>
 #include <gz/msgs/details/world_reset.pb.h>
 #include <gz/msgs/entity_factory.pb.h>
@@ -16,6 +17,7 @@
 #include <ostream>
 #include <rclcpp/utilities.hpp>
 #include <string>
+#include <string_view>
 
 #include "nandhi_msg_types/srv/get_observations.hpp"
 #include "rclcpp/rclcpp.hpp"
@@ -30,7 +32,7 @@ std::string world_name = "vk";      // Replace with your world name if needed
 std::string target_name = "target";
 
 bool is_crashed{false};
-float distance_{0.0};
+double distance_{0.0};
 
 // Create a transport node.
 gz::transport::Node t_node;
@@ -125,6 +127,10 @@ void OnContact(const gz::msgs::Contacts &contacts) {
     }
 }
 
+void OnDistance(const gz::msgs::Double &distance) {
+    distance_ = distance.data();
+}
+
 void ProcessRequest(
     const std::shared_ptr<nandhi_msg_types::srv::GetObservations::Request>
         request,
@@ -149,6 +155,7 @@ void ProcessRequest(
     }
 
     response->crash = is_crashed;
+    response->t_distance = distance_;
 }
 
 int main(int argc, const char *const *argv) {
@@ -158,6 +165,8 @@ int main(int argc, const char *const *argv) {
     // TODO : Get the path from arguments
 
     // TODO : Wait for the Gazebo server to start and time out after 5 seconds
+
+    std::string distance_topic{"/model/nandhi/distance"};
 
     //! [create Nandhi entity]
     std::string modelStr;
@@ -190,6 +199,11 @@ int main(int argc, const char *const *argv) {
     ret = t_node.Subscribe(topic, OnContact);
     if (!ret) {
         std::cerr << "Failed to subscribe to contact sensor" << std::endl;
+    }
+
+    ret = t_node.Subscribe(distance_topic, OnDistance);
+    if (!ret) {
+        std::cerr << "Failed to subscribe to distance sensor" << std::endl;
     }
     //! [subscribe for contact sensor]
 

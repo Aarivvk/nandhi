@@ -6,3 +6,4 @@ bool step
 int64 multi_step
 ---
 bool crash
+float64 t_distance
