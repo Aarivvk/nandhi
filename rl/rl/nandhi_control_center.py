@@ -37,12 +37,6 @@ class PygameOpenCVCarControl:
         self.running = True
         self.current_frame = None
 
-        package_name = 'rl'
-        # Get package's share directory
-        package_share_dir = get_package_share_directory(package_name)
-        self.steering_file = pygame.image.load(os.path.join(package_share_dir, 'image', 'steering_wheel.png'))
-        self.speed_file = pygame.image.load(os.path.join(package_share_dir, 'image', 'accelerator.png'))
-
         # Start the interface thread
         self.interface_thread = threading.Thread(target=self.__run, daemon=True)
         self.interface_thread.start()
@@ -80,16 +74,13 @@ class PygameOpenCVCarControl:
         # Draw OpenCV image
         self.screen.blit(frame_surface, (0, 0))
 
-        # Scale images to fit the display
-        steering_img = pygame.transform.scale(self.steering_file, (50, 50))
-        speed_img = pygame.transform.scale(self.speed_file, (50, 50))
+        # Clear the text area before new values are drawn
+        pygame.draw.rect(self.screen, (0, 0, 0), (0, self.HEIGHT - 100, self.WIDTH, 100))
 
-        # Display images and text on the screen at the bottom
-        self.screen.blit(steering_img, (10, self.HEIGHT - 80))
+        # Display text on the screen at the bottom
+        # The text is positioned at the bottom of the screen for better readability and to avoid overlapping with the displayed image.
         self.screen.blit(self.font.render(f"Steering: {self.steering_angle:.2f}", True, (255, 255, 255)), (70, self.HEIGHT - 70))
-
-        self.screen.blit(speed_img, (200, self.HEIGHT - 80))
-        self.screen.blit(self.font.render(f"Speed: {self.speed:.2f}", True, (255, 255, 255)), (260, self.HEIGHT - 70))
+        self.screen.blit(self.font.render(f"Speed: {self.speed:.2f}", True, (255, 255, 255)), (370, self.HEIGHT - 70))
 
         pygame.display.flip()
 
