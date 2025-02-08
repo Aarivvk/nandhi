@@ -10,6 +10,8 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        ('share/' + package_name + '/image', ['image/steering_wheel.png']),
+        ('share/' + package_name + '/image', ['image/accelerator.png']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -20,6 +22,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'nandhi_control_center = rl.nandhi_control_center:PygameOpenCVCarControl',
             'ros_client = rl.ros_sim_client:RosSimClient',
             'rl_agent = rl.rl_agent:main'
         ],
