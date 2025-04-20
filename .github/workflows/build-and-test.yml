@@ -22,7 +22,7 @@ jobs:
       - name: Check out repository code
         with:
           submodules: recursive
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build Nanhi
         run: |
